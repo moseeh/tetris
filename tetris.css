@@ -90,11 +90,19 @@ button:hover {
     background-color: #666;
 }
 
- /* Cells for both board */
- .cell {
+/* Cells for both board */
+.cell {
     width: 100%;
     height: 100%;
     background-color: #000;
+    border: 1px solid #333;
+    box-sizing: border-box;
+}
+
+/* Cells for both next piece */
+.cellnext {
+    width: 100%;
+    height: 100%;
     border: 1px solid #333;
     box-sizing: border-box;
 }
