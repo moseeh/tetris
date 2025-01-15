@@ -67,3 +67,11 @@ body {
     border-radius: 5px;
     border: 2px solid #555;
 }
+
+.controls {
+    text-align: center;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #555;
+}
