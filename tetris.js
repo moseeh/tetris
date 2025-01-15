@@ -79,6 +79,36 @@ function getRandomShape() {
     };
 }
 
+function updateNextPieceDisplay() {
+    let nextPieceGrid = document.getElementById('tetris-next');
+    nextPieceGrid.innerHTML = '';
+    
+    // Create 4x4 grid
+    for (let y = 0; y < 4; y++) {
+        for (let x = 0; x < 4; x++) {
+            const cell = document.createElement('div');
+            cell.className = 'cellnext';
+            nextPieceGrid.appendChild(cell);
+        }
+    }
+    
+    // Draw next piece using a different approach
+    const offsetX = 1; // Center the piece in the 4x4 grid
+    const offsetY = 1;
+    nextShape.shape.forEach(([x, y]) => {
+        const newX = x + offsetX;
+        const newY = y + offsetY;
+        let index = newY * 4 + newX;
+        if (nextShape.index === 0 ) {
+            index--
+        }
+        if (nextPieceGrid.children[index]) {
+            const cell = nextPieceGrid.children[index];
+            cell.style.backgroundColor = nextShape.color;
+        }
+    });
+}
+
 function startGame() {
     // Reset game state
     occupiedBlocks = Array(height).fill().map(() => Array(width).fill(0));
