@@ -10,3 +10,14 @@ body {
     height: 100vh;
 }
 
+.tetris-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 20px;
+    background: #222;
+    border: 2px solid #555;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
