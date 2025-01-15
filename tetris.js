@@ -137,6 +137,23 @@ function checkCollision() {
     });
 }
 
+function mergeShape() {
+    currentShape.shape.forEach(([x, y]) => {
+        const newX = x + currentShape.location[0];
+        const newY = y + currentShape.location[1];
+        if (newY >= 0) {
+            occupiedBlocks[newY][newX] = currentShape.color;
+        }
+    });
+    
+    checkLines();
+    createShape();
+    
+    if (checkCollision()) {
+        gameOver();
+    }
+}
+
 function update(time = 0) {
     if (state !== 1) return;
 
