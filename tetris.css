@@ -46,3 +46,10 @@ body {
     border: 2px solid #555;
     gap: 1px;
 }
+
+.info-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 150px;
+}
