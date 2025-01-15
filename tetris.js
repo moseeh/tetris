@@ -154,6 +154,25 @@ function mergeShape() {
     }
 }
 
+function checkLines() {
+    let linesCleared = 0;
+    
+    for (let y = height - 1; y >= 0; y--) {
+        if (occupiedBlocks[y].every(cell => cell)) {
+            // Remove the line
+            occupiedBlocks.splice(y, 1);
+            // Add new empty line at top
+            occupiedBlocks.unshift(Array(width).fill(0));
+            linesCleared++;
+            y++; // Check the same row again
+        }
+    }
+    
+    if (linesCleared > 0) {
+        updateScore(linesCleared);
+    }
+}
+
 function update(time = 0) {
     if (state !== 1) return;
 
