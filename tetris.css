@@ -33,3 +33,16 @@ body {
     border: 2px solid #555;
     gap: 1px;
 }
+
+#tetris-next {
+    width: 120px;
+    /* 4 columns x 30px each */
+    height: 120px;
+    /* 4 rows x 30px each */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    background-color: #111;
+    border: 2px solid #555;
+    gap: 1px;
+}
