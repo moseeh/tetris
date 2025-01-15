@@ -261,6 +261,46 @@ function draw() {
     });
 }
 
+
+function handleInput(e) {
+    if (state !== 1) {
+        if (e.key !== 'p') return;
+    }
+    e.preventDefault();
+    
+    switch (e.key) {
+        case 'ArrowLeft':
+            direction = "left";
+            moveShape();
+            break;
+        case 'ArrowRight':
+            direction = "right";
+            moveShape();
+            break;
+        case 'ArrowDown':
+            direction = "down";
+            moveShape();
+            break;
+        case 'ArrowUp':
+            rotateShape();
+            break;
+        case ' ':
+            // Hard drop
+            while (!checkCollision()) {
+                currentShape.location[1]++;
+            }
+            currentShape.location[1]--;
+            mergeShape();
+            break;
+        case 'p':
+            state = state == 1 ? 0 : 1;
+            // if (state === 1) {
+                update();
+            // }
+            break;
+    }
+}
+
 function startGame() {
     // Reset game state
     occupiedBlocks = Array(height).fill().map(() => Array(width).fill(0));
