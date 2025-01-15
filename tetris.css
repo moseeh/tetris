@@ -21,3 +21,15 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
+#tetris-board {
+    width: 300px;
+    /* 10 columns x 30px each */
+    height: 600px;
+    /* 20 rows x 30px each */
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    background-color: #111;
+    border: 2px solid #555;
+    gap: 1px;
+}
