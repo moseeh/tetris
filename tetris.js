@@ -36,6 +36,25 @@ function createBoard() {
     }
 }
 
+function createShapes() {
+    // I piece
+    const line = [[0, 1], [1, 1], [2, 1], [3, 1]];
+    // O piece
+    const square = [[0, 0], [1, 0], [0, 1], [1, 1]];
+    // T piece
+    const tShape = [[1, 0], [0, 1], [1, 1], [2, 1]];
+    // L piece
+    const lShape = [[2, 0], [0, 1], [1, 1], [2, 1]];
+    // J piece
+    const jShape = [[0, 0], [0, 1], [1, 1], [2, 1]];
+    // S piece
+    const sShape = [[1, 0], [2, 0], [0, 1], [1, 1]];
+    // Z piece
+    const zShape = [[0, 0], [1, 0], [1, 1], [2, 1]];
+
+    shapes = [line, square, tShape, lShape, jShape, sShape, zShape];
+}
+
 function startGame() {
     // Reset game state
     occupiedBlocks = Array(height).fill().map(() => Array(width).fill(0));
