@@ -173,6 +173,20 @@ function checkLines() {
     }
 }
 
+function updateScore(linesCleared) {
+    const linePoints = POINTS_PER_LINE * linesCleared * level;
+    score += linePoints;
+    lines += linesCleared;
+    
+    if (score >= level * POINTS_PER_LEVEL && level < MAX_LEVEL) {
+        level++;
+    }
+    
+    document.getElementById('score').textContent = score;
+    document.getElementById('level').textContent = level;
+    document.getElementById('lines').textContent = lines;
+}
+
 function update(time = 0) {
     if (state !== 1) return;
 
