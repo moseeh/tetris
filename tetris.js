@@ -109,6 +109,26 @@ function updateNextPieceDisplay() {
     });
 }
 
+function update(time = 0) {
+    if (state !== 1) return;
+
+    const deltaTime = time - lastTime;
+    dropCounter += deltaTime;
+
+    if (dropCounter > GAME_SPEED / level) {
+        direction = "down";
+        moveShape();
+        dropCounter = 0;
+    }
+
+    // console.log(currentShape)
+    // console.log(nextShape)
+
+    draw();
+    lastTime = time;
+    animationId = requestAnimationFrame(update);
+}
+
 function startGame() {
     // Reset game state
     occupiedBlocks = Array(height).fill().map(() => Array(width).fill(0));
