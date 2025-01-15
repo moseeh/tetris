@@ -75,3 +75,13 @@ body {
     border-radius: 5px;
     border: 2px solid #555;
 }
+
+button {
+    background-color: #444;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
