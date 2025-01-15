@@ -123,6 +123,20 @@ function rotateShape() {
     }
 }
 
+function checkCollision() {
+    return currentShape.shape.some(([x, y]) => {
+        const newX = x + currentShape.location[0];
+        const newY = y + currentShape.location[1];
+        
+        return (
+            newX < 0 || 
+            newX >= width ||
+            newY >= height ||
+            (newY >= 0 && occupiedBlocks[newY][newX])
+        );
+    });
+}
+
 function update(time = 0) {
     if (state !== 1) return;
 
