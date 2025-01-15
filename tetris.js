@@ -187,6 +187,12 @@ function updateScore(linesCleared) {
     document.getElementById('lines').textContent = lines;
 }
 
+function gameOver() {
+    state = 2;
+    cancelAnimationFrame(animationId);
+    alert(`Game Over! Final Score: ${score}`);
+}
+
 function update(time = 0) {
     if (state !== 1) return;
 
