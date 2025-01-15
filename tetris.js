@@ -109,6 +109,20 @@ function updateNextPieceDisplay() {
     });
 }
 
+
+function rotateShape() {
+    const originalShape = currentShape.shape;
+    const rotated = currentShape.shape.map(([x, y]) => {
+        return [-y, x];
+    });
+    
+    currentShape.shape = rotated;
+    
+    if (checkCollision()) {
+        currentShape.shape = originalShape;
+    }
+}
+
 function update(time = 0) {
     if (state !== 1) return;
 
