@@ -8,6 +8,24 @@
 <body>
     <div class="tetris-container">
         <div id="tetris-board"></div>
+        <div class="info-panel">
+            <div class="scoreboard">
+                <h2>Score: <span id="score">0</span></h2>
+                <h2>Level: <span id="level">1</span></h2>
+                <h2>Lines: <span id="lines">0</span></h2>
+            </div>
+            <h3>Next Piece:</h3>
+            <div id="tetris-next"></div>
+            <div class="controls">
+                <h3>Controls:</h3>
+                <p>← → : Move left/right</p>
+                <p>↑ : Rotate</p>
+                <p>↓ : Soft drop</p>
+                <p>Space : Hard drop</p>
+                <p>P : Pause</p>
+            </div>
+            <button onclick="startGame()">Start Game</button>
+        </div>
     </div>
 </body>
 </html>
