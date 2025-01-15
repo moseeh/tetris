@@ -53,3 +53,9 @@ body {
     gap: 20px;
     width: 150px;
 }
+
+.info-panel h2,
+.info-panel h3 {
+    margin: 0;
+    text-align: center;
+}
