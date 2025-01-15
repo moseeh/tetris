@@ -21,6 +21,21 @@ let lastTime = 0;
 let dropCounter = 0;
 let animationId;
 
+function createBoard() {
+    let board = document.getElementById('tetris-board');
+    board.innerHTML = '';
+    
+    for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.dataset.x = x;
+            cell.dataset.y = y;
+            board.appendChild(cell);
+        }
+    }
+}
+
 function startGame() {
     // Reset game state
     occupiedBlocks = Array(height).fill().map(() => Array(width).fill(0));
