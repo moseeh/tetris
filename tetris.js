@@ -129,6 +129,27 @@ function update(time = 0) {
     animationId = requestAnimationFrame(update);
 }
 
+function moveShape() {
+    let [x, y] = currentShape.location;
+    
+    if (direction === "down") y++;
+    else if (direction === "left") x--;
+    else if (direction === "right") x++;
+    
+    currentShape.location = [x, y];
+    
+    if (checkCollision()) {
+        if (direction === "down") {
+            currentShape.location = [x, y - 1];
+            mergeShape();
+        } else {
+            currentShape.location = [direction === "left" ? x + 1 : x - 1, y];
+        }
+    }
+    
+    direction = "";
+}
+
 function startGame() {
     // Reset game state
     occupiedBlocks = Array(height).fill().map(() => Array(width).fill(0));
