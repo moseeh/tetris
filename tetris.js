@@ -55,6 +55,15 @@ function createShapes() {
     shapes = [line, square, tShape, lShape, jShape, sShape, zShape];
 }
 
+function createShape() {
+    if (!nextShape) {
+        nextShape = getRandomShape();
+    }
+    currentShape = nextShape;
+    nextShape = getRandomShape();
+    updateNextPieceDisplay();
+}
+
 function startGame() {
     // Reset game state
     occupiedBlocks = Array(height).fill().map(() => Array(width).fill(0));
