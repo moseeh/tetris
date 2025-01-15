@@ -294,9 +294,9 @@ function handleInput(e) {
             break;
         case 'p':
             state = state == 1 ? 0 : 1;
-            // if (state === 1) {
+            if (state === 1) {
                 update();
-            // }
+            }
             break;
     }
 }
