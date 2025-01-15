@@ -98,3 +98,32 @@ button:hover {
     border: 1px solid #333;
     box-sizing: border-box;
 }
+
+/* Tetromino colors */
+.cell.cyan {
+    background-color: cyan;
+}
+
+.cell.blue {
+    background-color: blue;
+}
+
+.cell.orange {
+    background-color: orange;
+}
+
+.cell.yellow {
+    background-color: yellow;
+}
+
+.cell.green {
+    background-color: green;
+}
+
+.cell.purple {
+    background-color: purple;
+}
+
+.cell.red {
+    background-color: red;
+}
