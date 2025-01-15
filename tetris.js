@@ -64,6 +64,21 @@ function createShape() {
     updateNextPieceDisplay();
 }
 
+function getRandomShape() {
+    const randomShape = Math.floor(Math.random() * shapes.length);
+    const randomColor = randomShape; // Match color to shape for consistency
+    const center = Math.floor(width / 2) - 1;
+    const shape = JSON.parse(JSON.stringify(shapes[randomShape])); // Deep clone
+
+    return {
+        index : randomShape,
+        shape,
+        color: colors[randomColor],
+        location: [center, 0],
+        rotation: 0
+    };
+}
+
 function startGame() {
     // Reset game state
     occupiedBlocks = Array(height).fill().map(() => Array(width).fill(0));
