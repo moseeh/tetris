@@ -150,6 +150,33 @@ function moveShape() {
     direction = "";
 }
 
+function draw() {
+    // Clear board
+    const cells = document.querySelectorAll('.cell');
+    cells.forEach(cell => {
+        const x = parseInt(cell.dataset.x);
+        const y = parseInt(cell.dataset.y);
+
+        if (y >= 0 && occupiedBlocks[y][x]) {
+            cell.style.backgroundColor = occupiedBlocks[y][x];
+        } else {
+            cell.style.backgroundColor = "";
+        }
+    });
+
+    // Draw current piece
+    currentShape.shape.forEach(([x, y]) => {
+        const newX = x + currentShape.location[0];
+        const newY = y + currentShape.location[1];
+        if (newY >= 0) {
+            const cell = document.querySelector(`.cell[data-x="${newX}"][data-y="${newY}"]`);
+            if (cell) {
+                cell.style.backgroundColor = currentShape.color;
+            }
+        }
+    });
+}
+
 function startGame() {
     // Reset game state
     occupiedBlocks = Array(height).fill().map(() => Array(width).fill(0));
