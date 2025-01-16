@@ -1,0 +1,137 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.tetris-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 20px;
+    background: #222;
+    border: 2px solid #555;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+#tetris-board {
+    width: 300px;
+    /* 10 columns x 30px each */
+    height: 600px;
+    /* 20 rows x 30px each */
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    background-color: #111;
+    border: 2px solid #555;
+    gap: 1px;
+}
+
+#tetris-next {
+    width: 120px;
+    /* 4 columns x 30px each */
+    height: 120px;
+    /* 4 rows x 30px each */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    background-color: #111;
+    border: 2px solid #555;
+    gap: 1px;
+}
+
+.info-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 150px;
+}
+
+.info-panel h2,
+.info-panel h3 {
+    margin: 0;
+    text-align: center;
+}
+
+.info-panel .scoreboard {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    border-radius: 5px;
+    border: 2px solid #555;
+}
+
+.controls {
+    text-align: center;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #555;
+}
+
+button {
+    background-color: #444;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #666;
+}
+
+/* Cells for both board */
+.cell {
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    border: 1px solid #333;
+    box-sizing: border-box;
+}
+
+/* Cells for both next piece */
+.cellnext {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #333;
+    box-sizing: border-box;
+}
+
+/* Tetromino colors */
+.cell.cyan {
+    background-color: cyan;
+}
+
+.cell.blue {
+    background-color: blue;
+}
+
+.cell.orange {
+    background-color: orange;
+}
+
+.cell.yellow {
+    background-color: yellow;
+}
+
+.cell.green {
+    background-color: green;
+}
+
+.cell.purple {
+    background-color: purple;
+}
+
+.cell.red {
+    background-color: red;
+}
