@@ -112,11 +112,15 @@ function updateNextPieceDisplay() {
 
 function rotateShape() {
     const originalShape = currentShape.shape;
-    const rotated = currentShape.shape.map(([x, y]) => {
-        return [-y, x];
-    });
+    const rotated = currentShape.shape.map(([x, y]) => [y, -x]);
     
-    currentShape.shape = rotated;
+    const minX = Math.min(...rotated.map(([x, y]) => x));
+    const minY = Math.min(...rotated.map(([x, y]) => y));
+    
+    currentShape.shape = rotated.map(([x, y]) => [
+        x - minX,
+        y - minY
+    ]);
     
     if (checkCollision()) {
         currentShape.shape = originalShape;
@@ -133,7 +137,7 @@ function checkCollision() {
             newX >= width ||
             newY >= height ||
             newY < 0 ||
-            (newY >= 0 && occupiedBlocks[newY][newX])
+            occupiedBlocks[newY][newX]
         );
     });
 }
