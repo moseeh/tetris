@@ -112,11 +112,12 @@ function updateNextPieceDisplay() {
 
 function rotateShape() {
     const originalShape = currentShape.shape;
-    const rotated = currentShape.shape.map(([x, y]) => [y, -x]);
+    const rotated = currentShape.shape.map(([x, y]) => [-y, x]);
     
     const minX = Math.min(...rotated.map(([x, y]) => x));
     const minY = Math.min(...rotated.map(([x, y]) => y));
     
+    // Shift all coordinates to keep them positive
     currentShape.shape = rotated.map(([x, y]) => [
         x - minX,
         y - minY
