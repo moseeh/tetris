@@ -4,6 +4,7 @@ const POINTS_PER_LINE = 100;
 const POINTS_PER_LEVEL = 1000;
 const MAX_LEVEL = 10;
 
+
 // Game state
 let shapes = [];
 let currentShape;
@@ -20,6 +21,7 @@ let lines = 0;
 let lastTime = 0;
 let dropCounter = 0;
 let animationId;
+const center = Math.floor(width / 2) - 1;
 
 function createBoard() {
     let board = document.getElementById('tetris-board');
@@ -67,9 +69,7 @@ function createShape() {
 function getRandomShape() {
     const randomShape = Math.floor(Math.random() * shapes.length);
     const randomColor = randomShape; // Match color to shape for consistency
-    const center = Math.floor(width / 2) - 1;
-    const shape = JSON.parse(JSON.stringify(shapes[randomShape])); // Deep clone
-
+    const shape = JSON.parse(JSON.stringify(shapes[randomShape])); 
     return {
         index : randomShape,
         shape,
@@ -132,6 +132,7 @@ function checkCollision() {
             newX < 0 || 
             newX >= width ||
             newY >= height ||
+            newY < 0 ||
             (newY >= 0 && occupiedBlocks[newY][newX])
         );
     });
