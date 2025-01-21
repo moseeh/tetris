@@ -25,6 +25,9 @@ let lastTime = 0;
 let dropCounter = 0;
 let animationId;
 let lives = STARTING_LIVES;
+let timeElapsed = 0;
+let lastTimerUpdate = 0;
+let timerRunning = false;
 const center = Math.floor(width / 2) - 1;
 
 function createBoard() {
@@ -228,6 +231,22 @@ function updateScore(linesCleared) {
   document.getElementById("lines").textContent = lines;
 }
 
+function updateTimer(currentTime) {
+  if (!lastTimerUpdate) lastTimerUpdate = currentTime;
+
+  if (currentTime - lastTimerUpdate >= 1000) {
+    timeElapsed++;
+
+    const minutes = Math.floor(timeElapsed / 60);
+    const seconds = timeElapsed % 60;
+
+    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+
+    lastTimerUpdate = currentTime;
+  }
+}
+
 function updateLivesDisplay() {
   const livesDisplay = document.getElementById('lives');
   livesDisplay.textContent = HEART_EMOJI.repeat(lives);
@@ -238,12 +257,13 @@ function gameOver() {
   updateLivesDisplay();
   if (lives <= 0) {
     state = 2;
+    timerRunning = false;
     cancelAnimationFrame(animationId);
     alert(`Game Over! Final Score: ${score}`);
   } else {
     occupiedBlocks = Array(height).fill().map(() => Array(width).fill(0));
     createShape()
-    state = 1; 
+    state = 1;
   }
 }
 
@@ -259,8 +279,9 @@ function update(time = 0) {
     dropCounter = 0;
   }
 
-  // console.log(currentShape)
-  // console.log(nextShape)
+  if (timerRunning) {
+    updateTimer(time);
+  }
 
   draw();
   lastTime = time;
@@ -349,7 +370,9 @@ function handleInput(e) {
       break;
     case "p":
       state = state == 1 ? 0 : 1;
+      timerRunning = state === 1;
       if (state === 1) {
+        lastTimerUpdate = 0;
         update();
       }
       break;
@@ -367,10 +390,16 @@ function startGame() {
   state = 1;
   lives = STARTING_LIVES;
 
+  timeElapsed = 0;
+  lastTimerUpdate = 0;
+  timerRunning = true;
+
   // Update display
   document.getElementById("score").textContent = score;
   document.getElementById("level").textContent = level;
   document.getElementById("lines").textContent = lines;
+  document.getElementById('minutes').textContent = '00';
+  document.getElementById('seconds').textContent = '00';
   updateLivesDisplay();
 
   createBoard();
