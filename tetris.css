@@ -9,7 +9,29 @@ body {
     align-items: center;
     height: 100vh;
 }
+.timer-container {
+    margin-bottom: 20px;
+    background: linear-gradient(145deg, #2a2a2a, #222);
+    padding: 15px 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
 
+#timer {
+    font-size: 2em;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+#timer span {
+    display: inline-block;
+    padding: 0 5px;
+    min-width: 40px;
+    animation: glow 2s infinite;
+}
 .tetris-container {
     display: flex;
     gap: 20px;
