@@ -4,6 +4,7 @@ const POINTS_PER_LINE = 100;
 const POINTS_PER_LEVEL = 1000;
 const MAX_LEVEL = 10;
 const STARTING_LIVES = 3;
+const HEART_EMOJI = '❤️';
 
 // Game state
 let shapes = [];
@@ -227,10 +228,14 @@ function updateScore(linesCleared) {
   document.getElementById("lines").textContent = lines;
 }
 
+function updateLivesDisplay() {
+  const livesDisplay = document.getElementById('lives');
+  livesDisplay.textContent = HEART_EMOJI.repeat(lives);
+}
+
 function gameOver() {
   lives--;
-  document.getElementById("lives").textContent = lives;
-
+  updateLivesDisplay();
   if (lives <= 0) {
     state = 2;
     cancelAnimationFrame(animationId);
@@ -238,7 +243,7 @@ function gameOver() {
   } else {
     occupiedBlocks = Array(height).fill().map(() => Array(width).fill(0));
     createShape()
-    state = 0; 
+    state = 1; 
   }
 }
 
@@ -366,7 +371,7 @@ function startGame() {
   document.getElementById("score").textContent = score;
   document.getElementById("level").textContent = level;
   document.getElementById("lines").textContent = lines;
-  document.getElementById("lives").textContent = lives
+  updateLivesDisplay();
 
   createBoard();
   createShapes();
