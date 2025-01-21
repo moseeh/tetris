@@ -89,7 +89,18 @@ button {
 button:hover {
     background-color: #666;
 }
+/* Alternative styling */
+.scoreboard h2.lives-display {
+    flex-direction: column;
+    text-align: center;
+}
 
+#lives {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 5px;
+}
 /* Cells for both board */
 .cell {
     width: 100%;
