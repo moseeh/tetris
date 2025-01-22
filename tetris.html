@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="tetris.css">
 </head>
 <body>
+    <div class="timer-container">
+        <div id="timer">Time: <span id="minutes">00</span>:<span id="seconds">00</span></div>
+    </div>
     <div class="tetris-container">
         <div id="tetris-board"></div>
         <div class="info-panel">
@@ -14,7 +17,7 @@
                 <h2>Score: <span id="score">0</span></h2>
                 <h2>Level: <span id="level">1</span></h2>
                 <h2>Lines: <span id="lines">0</span></h2>
-            </div>
+                <h2 class="lives-display">Lives <span id="lives">❤️❤️❤️</span></h2>            </div>
             <h3>Next Piece:</h3>
             <div id="tetris-next"></div>
             <div class="controls">
