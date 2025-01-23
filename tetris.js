@@ -200,15 +200,25 @@ function mergeShape() {
 
 function checkLines() {
   let linesCleared = 0;
+  const affectedRows = new Set();
 
-  for (let y = height - 1; y >= 0; y--) {
+  // Track which rows are affected by the merge
+  currentShape.shape.forEach(([x, y]) => {
+    const newY = y + currentShape.location[1];
+    if (newY >= 0) {
+      affectedRows.add(newY);
+    }
+  });
+
+  // Check only the affected rows
+  for (const y of affectedRows) {
     if (occupiedBlocks[y].every((cell) => cell)) {
       // Remove the line
       occupiedBlocks.splice(y, 1);
       // Add new empty line at top
       occupiedBlocks.unshift(Array(width).fill(0));
       linesCleared++;
-      y++; // Check the same row again
+      y++
     }
   }
 
