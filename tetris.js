@@ -386,56 +386,56 @@ function handleInput(e) {
   }
   // Handle pause toggle first
   if (e.key === 'p') {
-      e.preventDefault();
-      if (state === 1) {  // If game is running
-          state = 0;  // Pause the game
-          timerRunning = false;
-          togglePauseMenu(true);
-      } else if (state === 0) {  // If game is paused
-          state = 1;  // Resume the game
-          timerRunning = true;
-          togglePauseMenu(false);
-          lastTimerUpdate = 0;
-          update();
-      }
-      return;
+    e.preventDefault();
+    if (state === 1) {  // If game is running
+      state = 0;  // Pause the game
+      timerRunning = false;
+      togglePauseMenu(true);
+    } else if (state === 0) {  // If game is paused
+      state = 1;  // Resume the game
+      timerRunning = true;
+      togglePauseMenu(false);
+      lastTimerUpdate = 0;
+      update();
+    }
+    return;
   }
 
   // If game is not running (paused or game over), ignore all other inputs
   if (state !== 1) {
-      return;
+    return;
   }
 
   // Handle game controls
   e.preventDefault();
   switch (e.key) {
-      case "ArrowLeft":
-          direction = "left";
-          moveShape();
-          break;
+    case "ArrowLeft":
+      direction = "left";
+      moveShape();
+      break;
 
-      case "ArrowRight":
-          direction = "right";
-          moveShape();
-          break;
+    case "ArrowRight":
+      direction = "right";
+      moveShape();
+      break;
 
-      case "ArrowDown":
-          direction = "down";
-          moveShape();
-          break;
+    case "ArrowDown":
+      direction = "down";
+      moveShape();
+      break;
 
-      case "ArrowUp":
-          rotateShape();
-          break;
+    case "ArrowUp":
+      rotateShape();
+      break;
 
-      case " ":  // Space bar for hard drop
-          // Keep moving down until collision
-          while (!checkCollision()) {
-              currentShape.location[1]++;
-          }
-          currentShape.location[1]--;
-          mergeShape();
-          break;
+    case " ":  // Space bar for hard drop
+      // Keep moving down until collision
+      while (!checkCollision()) {
+        currentShape.location[1]++;
+      }
+      currentShape.location[1]--;
+      mergeShape();
+      break;
   }
 }
 
@@ -445,28 +445,28 @@ function togglePauseMenu(show) {
 }
 
 
-  const resumeBtn = document.getElementById("resume-btn");
-  const restartBtn = document.getElementById("restart-btn");
-  const quitBtn = document.getElementById("quit-btn");
+const resumeBtn = document.getElementById("resume-btn");
+const restartBtn = document.getElementById("restart-btn");
+const quitBtn = document.getElementById("quit-btn");
 
-  resumeBtn.addEventListener("click", () => {
-    state = 1;
-    timerRunning = true;
-    togglePauseMenu(false);
-    lastTimerUpdate = 0;
-    update();
-  });
+resumeBtn.addEventListener("click", () => {
+  state = 1;
+  timerRunning = true;
+  togglePauseMenu(false);
+  lastTimerUpdate = 0;
+  update();
+});
 
-  restartBtn.addEventListener("click", () => {
-    togglePauseMenu(false);
-    startGame();
-  });
+restartBtn.addEventListener("click", () => {
+  togglePauseMenu(false);
+  startGame();
+});
 
-  quitBtn.addEventListener("click", () => {
-    if (confirm("Are you sure you want to quit the game")) {
-      window.location.reload();
-    }
-  });
+quitBtn.addEventListener("click", () => {
+  if (confirm("Are you sure you want to quit the game")) {
+    window.location.reload();
+  }
+});
 
 
 function startGame() {
@@ -491,6 +491,7 @@ function startGame() {
   document.getElementById("lines").textContent = lines;
   document.getElementById("minutes").textContent = "00";
   document.getElementById("seconds").textContent = "00";
+  document.getElementById("start").textContent = "Restart"
   updateLivesDisplay();
 
   createBoard();
