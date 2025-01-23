@@ -200,13 +200,13 @@ function mergeShape() {
 
 function checkLines() {
   let linesCleared = 0;
-  const affectedRows = new Set();
+  const affectedRows = [];
 
   // Track which rows are affected by the merge
   currentShape.shape.forEach(([x, y]) => {
     const newY = y + currentShape.location[1];
     if (newY >= 0) {
-      affectedRows.add(newY);
+      affectedRows.push(newY);
     }
   });
 
@@ -218,7 +218,6 @@ function checkLines() {
       // Add new empty line at top
       occupiedBlocks.unshift(Array(width).fill(0));
       linesCleared++;
-      y++
     }
   }
 
