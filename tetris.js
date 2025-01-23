@@ -444,7 +444,7 @@ function togglePauseMenu(show) {
   pauseMenu.classList.toggle("hidden", !show);
 }
 
-function setupPauseMenu() {
+
   const resumeBtn = document.getElementById("resume-btn");
   const restartBtn = document.getElementById("restart-btn");
   const settingsBtn = document.getElementById("settings-btn");
@@ -489,7 +489,7 @@ function setupPauseMenu() {
       draw();
     }
   });
-}
+
 
 function startGame() {
   // Reset game state
@@ -527,7 +527,7 @@ function startGame() {
 
 // Event listeners
 document.addEventListener("keydown", handleInput);
-document.addEventListener('DOMContentLoaded', setupPauseMenu);
+// document.addEventListener('DOMContentLoaded', setupPauseMenu);
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === "hidden") {
     if (state === 1) { // If the game is running
