@@ -10,7 +10,7 @@ let currentShape;
 let nextShape;
 let height = 20;
 let width = 10;
-let state = 1; // 1 running - 0 paused - 2 game over
+let state = 3; // 1 running - 0 paused - 2 game over
 let colors = ["cyan", "blue", "orange", "yellow", "green", "purple", "red"];
 let occupiedBlocks = Array(height)
   .fill()
@@ -362,6 +362,12 @@ function draw() {
 }
 
 function handleInput(e) {
+  if (e.key === 'Enter') {
+    if (state === 3) {
+      startGame();
+      return
+    }
+  }
   // Handle pause toggle first
   if (e.key === 'p') {
       e.preventDefault();
