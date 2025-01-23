@@ -447,7 +447,6 @@ function togglePauseMenu(show) {
 
   const resumeBtn = document.getElementById("resume-btn");
   const restartBtn = document.getElementById("restart-btn");
-  const settingsBtn = document.getElementById("settings-btn");
   const quitBtn = document.getElementById("quit-btn");
 
   resumeBtn.addEventListener("click", () => {
@@ -463,30 +462,9 @@ function togglePauseMenu(show) {
     startGame();
   });
 
-  settingsBtn.addEventListener("click", () => {
-    alert("Settings menu coming soon");
-  });
-
   quitBtn.addEventListener("click", () => {
     if (confirm("Are you sure you want to quit the game")) {
-      state = 2;
-      timerRunning = false;
-      cancelAnimationFrame(animationId);
-      togglePauseMenu(false);
-      occupiedBlocks = Array(height)
-        .fill()
-        .map(() => Array(width).fill(0));
-      score = 0;
-      level = 1;
-      lines = 0;
-      lives = STARTING_LIVES;
-      updateLivesDisplay();
-      document.getElementById("score").textContent = "0";
-      document.getElementById("level").textContent = "1";
-      document.getElementById("lines").textContent = "0";
-      document.getElementById("minutes").textContent = "00";
-      document.getElementById("seconds").textContent = "00";
-      draw();
+      window.location.reload();
     }
   });
 
