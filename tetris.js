@@ -3,6 +3,8 @@ const GAME_SPEED = 1000; // Initial speed in milliseconds
 const MAX_LEVEL = 10;
 const STARTING_LIVES = 3;
 const HEART_EMOJI = "❤️";
+const FPS = 60;
+const FRAME_TIME = 1000 / FPS;
 
 // Game state
 let shapes = [];
@@ -294,6 +296,11 @@ function update(time = 0) {
   if (state !== 1) return;
 
   const deltaTime = time - lastTime;
+  if (deltaTime < FRAME_TIME) {
+    animationId = requestAnimationFrame(update);
+    return;
+  }
+
   dropCounter += deltaTime;
 
   if (dropCounter > GAME_SPEED / level) {
