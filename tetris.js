@@ -489,4 +489,21 @@ function startGame() {
 // Event listeners
 document.addEventListener("keydown", handleInput);
 document.addEventListener('DOMContentLoaded', setupPauseMenu);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === "hidden") {
+    if (state === 1) { // If the game is running
+      state = 0; // Pause the game
+      timerRunning = false;
+      togglePauseMenu(true);
+    }
+  } else if (document.visibilityState === "visible") {
+    if (state === 0) { // If the game was paused
+      togglePauseMenu(false);
+      timerRunning = true;
+      state = 1;
+      update();
+    }
+  }
+});
+
 document.querySelector("button").addEventListener("click", startGame);
