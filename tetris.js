@@ -1,10 +1,8 @@
 // Game constants
 const GAME_SPEED = 1000; // Initial speed in milliseconds
-const POINTS_PER_LINE = 100;
-const POINTS_PER_LEVEL = 1000;
 const MAX_LEVEL = 10;
 const STARTING_LIVES = 3;
-const HEART_EMOJI = '❤️';
+const HEART_EMOJI = "❤️";
 
 // Game state
 let shapes = [];
@@ -218,12 +216,31 @@ function checkLines() {
 }
 
 function updateScore(linesCleared) {
-  const linePoints = POINTS_PER_LINE * linesCleared * level;
+  let basePoints;
+  switch (linesCleared) {
+    case 1:
+      basePoints = 40;
+      break;
+    case 2:
+      basePoints = 100;
+      break;
+    case 3:
+      basePoints = 300;
+      break;
+    case 4:
+      basePoints = 1200;
+      break;
+    default:
+      basePoints = 0;
+  }
+  const linePoints = basePoints * (level);
   score += linePoints;
   lines += linesCleared;
 
-  if (score >= level * POINTS_PER_LEVEL && level < MAX_LEVEL) {
-    level++;
+  // Update level based on total lines cleared
+  const newLevel = Math.min(Math.floor(lines / 10) + 1, MAX_LEVEL);
+  if (newLevel > level) {
+    level = newLevel;
   }
 
   document.getElementById("score").textContent = score;
@@ -240,15 +257,19 @@ function updateTimer(currentTime) {
     const minutes = Math.floor(timeElapsed / 60);
     const seconds = timeElapsed % 60;
 
-    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+    document.getElementById("minutes").textContent = minutes
+      .toString()
+      .padStart(2, "0");
+    document.getElementById("seconds").textContent = seconds
+      .toString()
+      .padStart(2, "0");
 
     lastTimerUpdate = currentTime;
   }
 }
 
 function updateLivesDisplay() {
-  const livesDisplay = document.getElementById('lives');
+  const livesDisplay = document.getElementById("lives");
   livesDisplay.textContent = HEART_EMOJI.repeat(lives);
 }
 
@@ -261,8 +282,10 @@ function gameOver() {
     cancelAnimationFrame(animationId);
     alert(`Game Over! Final Score: ${score}`);
   } else {
-    occupiedBlocks = Array(height).fill().map(() => Array(width).fill(0));
-    createShape()
+    occupiedBlocks = Array(height)
+      .fill()
+      .map(() => Array(width).fill(0));
+    createShape();
     state = 1;
   }
 }
@@ -339,44 +362,111 @@ function draw() {
 }
 
 function handleInput(e) {
-  if (state !== 1) {
-    if (e.key !== "p") return;
+  // Handle pause toggle first
+  if (e.key === 'p') {
+      e.preventDefault();
+      if (state === 1) {  // If game is running
+          state = 0;  // Pause the game
+          timerRunning = false;
+          togglePauseMenu(true);
+      } else if (state === 0) {  // If game is paused
+          state = 1;  // Resume the game
+          timerRunning = true;
+          togglePauseMenu(false);
+          lastTimerUpdate = 0;
+          update();
+      }
+      return;
   }
-  e.preventDefault();
 
-  switch (e.key) {
-    case "ArrowLeft":
-      direction = "left";
-      moveShape();
-      break;
-    case "ArrowRight":
-      direction = "right";
-      moveShape();
-      break;
-    case "ArrowDown":
-      direction = "down";
-      moveShape();
-      break;
-    case "ArrowUp":
-      rotateShape();
-      break;
-    case " ":
-      // Hard drop
-      while (!checkCollision()) {
-        currentShape.location[1]++;
-      }
-      currentShape.location[1]--;
-      mergeShape();
-      break;
-    case "p":
-      state = state == 1 ? 0 : 1;
-      timerRunning = state === 1;
-      if (state === 1) {
-        lastTimerUpdate = 0;
-        update();
-      }
-      break;
+  // If game is not running (paused or game over), ignore all other inputs
+  if (state !== 1) {
+      return;
   }
+
+  // Handle game controls
+  e.preventDefault();
+  switch (e.key) {
+      case "ArrowLeft":
+          direction = "left";
+          moveShape();
+          break;
+
+      case "ArrowRight":
+          direction = "right";
+          moveShape();
+          break;
+
+      case "ArrowDown":
+          direction = "down";
+          moveShape();
+          break;
+
+      case "ArrowUp":
+          rotateShape();
+          break;
+
+      case " ":  // Space bar for hard drop
+          // Keep moving down until collision
+          while (!checkCollision()) {
+              currentShape.location[1]++;
+          }
+          currentShape.location[1]--;
+          mergeShape();
+          break;
+  }
+}
+
+function togglePauseMenu(show) {
+  const pauseMenu = document.getElementById("pause-menu");
+  pauseMenu.classList.toggle("hidden", !show);
+}
+
+function setupPauseMenu() {
+  const resumeBtn = document.getElementById("resume-btn");
+  const restartBtn = document.getElementById("restart-btn");
+  const settingsBtn = document.getElementById("settings-btn");
+  const quitBtn = document.getElementById("quit-btn");
+
+  resumeBtn.addEventListener("click", () => {
+    state = 1;
+    timerRunning = true;
+    togglePauseMenu(false);
+    lastTimerUpdate = 0;
+    update();
+  });
+
+  restartBtn.addEventListener("click", () => {
+    togglePauseMenu(false);
+    startGame();
+  });
+
+  settingsBtn.addEventListener("click", () => {
+    alert("Settings menu coming soon");
+  });
+
+  quitBtn.addEventListener("click", () => {
+    if (confirm("Are you sure you want to quit the game")) {
+      state = 2;
+      timerRunning = false;
+      cancelAnimationFrame(animationId);
+      togglePauseMenu(false);
+      occupiedBlocks = Array(height)
+        .fill()
+        .map(() => Array(width).fill(0));
+      score = 0;
+      level = 1;
+      lines = 0;
+      lives = STARTING_LIVES;
+      updateLivesDisplay();
+      document.getElementById("score").textContent = "0";
+      document.getElementById("level").textContent = "1";
+      document.getElementById("lines").textContent = "0";
+      document.getElementById("minutes").textContent = "00";
+      document.getElementById("seconds").textContent = "00";
+      draw();
+    }
+  });
 }
 
 function startGame() {
@@ -393,13 +483,14 @@ function startGame() {
   timeElapsed = 0;
   lastTimerUpdate = 0;
   timerRunning = true;
+  togglePauseMenu(false);
 
   // Update display
   document.getElementById("score").textContent = score;
   document.getElementById("level").textContent = level;
   document.getElementById("lines").textContent = lines;
-  document.getElementById('minutes').textContent = '00';
-  document.getElementById('seconds').textContent = '00';
+  document.getElementById("minutes").textContent = "00";
+  document.getElementById("seconds").textContent = "00";
   updateLivesDisplay();
 
   createBoard();
@@ -414,4 +505,22 @@ function startGame() {
 
 // Event listeners
 document.addEventListener("keydown", handleInput);
+document.addEventListener('DOMContentLoaded', setupPauseMenu);
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === "hidden") {
+    if (state === 1) { // If the game is running
+      state = 0; // Pause the game
+      timerRunning = false;
+      togglePauseMenu(true);
+    }
+  } else if (document.visibilityState === "visible") {
+    if (state === 0) { // If the game was paused
+      togglePauseMenu(false);
+      timerRunning = true;
+      state = 1;
+      update();
+    }
+  }
+});
+
 document.querySelector("button").addEventListener("click", startGame);

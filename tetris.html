@@ -1,36 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tetris-Game</title>
     <link rel="stylesheet" href="tetris.css">
 </head>
+
 <body>
-    <div class="timer-container">
-        <div id="timer">Time: <span id="minutes">00</span>:<span id="seconds">00</span></div>
-    </div>
-    <div class="tetris-container">
-        <div id="tetris-board"></div>
-        <div class="info-panel">
-            <div class="scoreboard">
-                <h2>Score: <span id="score">0</span></h2>
-                <h2>Level: <span id="level">1</span></h2>
-                <h2>Lines: <span id="lines">0</span></h2>
-                <h2 class="lives-display">Lives <span id="lives">❤️❤️❤️</span></h2>            </div>
-            <h3>Next Piece:</h3>
-            <div id="tetris-next"></div>
-            <div class="controls">
-                <h3>Controls:</h3>
-                <p>← → : Move left/right</p>
-                <p>↑ : Rotate</p>
-                <p>↓ : Soft drop</p>
-                <p>Space : Hard drop</p>
-                <p>P : Pause</p>
+    <div class="game-wrapper">
+        <div class="timer-container">
+            <div id="timer">Time: <span id="minutes">00</span>:<span id="seconds">00</span></div>
+        </div>
+        <div class="tetris-container">
+            <div id="tetris-board"></div>
+            <div class="info-panel">
+                <div class="scoreboard">
+                    <h2>Score: <span id="score">0</span></h2>
+                    <h2>Level: <span id="level">1</span></h2>
+                    <h2>Lines: <span id="lines">0</span></h2>
+                    <h2 class="lives-display">Lives <span id="lives">❤️❤️❤️</span></h2>
+                </div>
+                <h3>Next Piece:</h3>
+                <div id="tetris-next"></div>
+                <div class="controls">
+                    <h3>Controls:</h3>
+                    <p>← → : Move left/right</p>
+                    <p>↑ : Rotate</p>
+                    <p>↓ : Soft drop</p>
+                    <p>Space : Hard drop</p>
+                    <p>P : Pause</p>
+                </div>
+                <button onclick="startGame()">Start Game</button>
             </div>
-            <button onclick="startGame()">Start Game</button>
+        </div>
+        <div id="pause-menu" class="modal hidden">
+            <div class="modal-content">
+                <h2> Game Paused</h2>
+                <div class="menu-buttons">
+                    <button id="resume-btn">Resume Game</button>
+                    <button id="restart-btn">Restart Game</button>
+                    <button id="settings-btn">Settings</button>
+                    <button id="quit-btn">Quit Game</button>
+                </div>
+            </div>
         </div>
     </div>
     <script src="tetris.js"></script>
 </body>
+
 </html>
