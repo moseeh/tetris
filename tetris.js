@@ -1,7 +1,5 @@
 // Game constants
 const GAME_SPEED = 1000; // Initial speed in milliseconds
-const POINTS_PER_LINE = 100;
-const POINTS_PER_LEVEL = 1000;
 const MAX_LEVEL = 10;
 const STARTING_LIVES = 3;
 const HEART_EMOJI = "❤️";
@@ -218,12 +216,31 @@ function checkLines() {
 }
 
 function updateScore(linesCleared) {
-  const linePoints = POINTS_PER_LINE * linesCleared * level;
+  let basePoints;
+  switch (linesCleared) {
+    case 1:
+      basePoints = 40;
+      break;
+    case 2:
+      basePoints = 100;
+      break;
+    case 3:
+      basePoints = 300;
+      break;
+    case 4:
+      basePoints = 1200;
+      break;
+    default:
+      basePoints = 0;
+  }
+  const linePoints = basePoints * (level);
   score += linePoints;
   lines += linesCleared;
 
-  if (score >= level * POINTS_PER_LEVEL && level < MAX_LEVEL) {
-    level++;
+  // Update level based on total lines cleared
+  const newLevel = Math.min(Math.floor(lines / 10) + 1, MAX_LEVEL);
+  if (newLevel > level) {
+    level = newLevel;
   }
 
   document.getElementById("score").textContent = score;
