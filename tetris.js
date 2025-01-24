@@ -32,6 +32,8 @@ const center = Math.floor(width / 2) - 1;
 
 function createBoard() {
   let board = document.getElementById("tetris-board");
+  let nextPieceGrid = document.getElementById("tetris-next");
+  nextPieceGrid.innerHTML = "";
   board.innerHTML = "";
 
   for (let y = 0; y < height; y++) {
@@ -41,6 +43,14 @@ function createBoard() {
       cell.dataset.x = x;
       cell.dataset.y = y;
       board.appendChild(cell);
+    }
+  }
+
+  for (let y = 0; y < 4; y++) {
+    for (let x = 0; x < 4; x++) {
+      const cell = document.createElement("div");
+      cell.className = "cellnext";
+      nextPieceGrid.appendChild(cell);
     }
   }
 }
@@ -123,15 +133,10 @@ function getRandomShape() {
 
 function updateNextPieceDisplay() {
   let nextPieceGrid = document.getElementById("tetris-next");
-  nextPieceGrid.innerHTML = "";
 
-  // Create 4x4 grid
-  for (let y = 0; y < 4; y++) {
-    for (let x = 0; x < 4; x++) {
-      const cell = document.createElement("div");
-      cell.className = "cellnext";
-      nextPieceGrid.appendChild(cell);
-    }
+  for (let i = 4; i < 12; i++) {
+    const cell = nextPieceGrid.children[i];
+    cell.style.backgroundColor = "";
   }
 
   // Draw next piece using a different approach
@@ -244,7 +249,7 @@ function updateScore(linesCleared) {
     default:
       basePoints = 0;
   }
-  const linePoints = basePoints * (level);
+  const linePoints = basePoints * level;
   score += linePoints;
   lines += linesCleared;
 
@@ -361,21 +366,23 @@ function draw() {
 }
 
 function handleInput(e) {
-  if (e.key === 'Enter') {
+  if (e.key === "Enter") {
     if (state === 3) {
       startGame();
-      return
+      return;
     }
   }
   // Handle pause toggle first
-  if (e.key === 'p') {
+  if (e.key === "p") {
     e.preventDefault();
-    if (state === 1) {  // If game is running
-      state = 0;  // Pause the game
+    if (state === 1) {
+      // If game is running
+      state = 0; // Pause the game
       timerRunning = false;
       togglePauseMenu(true);
-    } else if (state === 0) {  // If game is paused
-      state = 1;  // Resume the game
+    } else if (state === 0) {
+      // If game is paused
+      state = 1; // Resume the game
       timerRunning = true;
       togglePauseMenu(false);
       lastTimerUpdate = 0;
@@ -411,7 +418,7 @@ function handleInput(e) {
       rotateShape();
       break;
 
-    case " ":  // Space bar for hard drop
+    case " ": // Space bar for hard drop
       // Keep moving down until collision
       while (!checkCollision()) {
         currentShape.location[1]++;
@@ -430,7 +437,9 @@ function togglePauseMenu(show) {
 function gameOverMenu(show) {
   const gameOver = document.getElementById("gameover");
   let overtext = document.getElementById("gametext");
-  overtext.textContent = show? `Game Over! High Score ${score}` : "Game Restarted!";
+  overtext.textContent = show
+    ? `Game Over! High Score ${score}`
+    : "Game Restarted!";
   gameOver.classList.toggle("hidden", !show);
 }
 
@@ -441,7 +450,7 @@ function gameOver() {
     state = 2;
     timerRunning = false;
     cancelAnimationFrame(animationId);
-    gameOverMenu(true)
+    gameOverMenu(true);
   } else {
     occupiedBlocks = Array(height)
       .fill()
@@ -450,7 +459,6 @@ function gameOver() {
     state = 1;
   }
 }
-
 
 const resumeBtn = document.getElementById("resume-btn");
 const restartBtn = document.getElementById("restart-btn");
@@ -488,7 +496,6 @@ quitBtn.addEventListener("click", () => {
   }
 });
 
-
 function startGame() {
   // Reset game state
   occupiedBlocks = Array(height)
@@ -511,7 +518,7 @@ function startGame() {
   document.getElementById("lines").textContent = lines;
   document.getElementById("minutes").textContent = "00";
   document.getElementById("seconds").textContent = "00";
-  document.getElementById("start").textContent = "Restart"
+  document.getElementById("start").textContent = "Restart";
   updateLivesDisplay();
 
   createBoard();
@@ -527,15 +534,17 @@ function startGame() {
 // Event listeners
 document.addEventListener("keydown", handleInput);
 // document.addEventListener('DOMContentLoaded', setupPauseMenu);
-document.addEventListener('visibilitychange', () => {
+document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "hidden") {
-    if (state === 1) { // If the game is running
+    if (state === 1) {
+      // If the game is running
       state = 0; // Pause the game
       timerRunning = false;
       togglePauseMenu(true);
     }
   } else if (document.visibilityState === "visible") {
-    if (state === 0) { // If the game was paused
+    if (state === 0) {
+      // If the game was paused
       togglePauseMenu(false);
       timerRunning = true;
       state = 1;
