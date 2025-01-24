@@ -28,6 +28,7 @@ let lives = STARTING_LIVES;
 let timeElapsed = 0;
 let lastTimerUpdate = 0;
 let timerRunning = false;
+let linesCleared = 0
 const center = Math.floor(width / 2) - 1;
 
 function createBoard() {
@@ -204,34 +205,25 @@ function mergeShape() {
 }
 
 function checkLines() {
-  let linesCleared = 0;
-  const affectedRows = [];
+   linesCleared = 0;
 
-  // Track which rows are affected by the merge
-  currentShape.shape.forEach(([x, y]) => {
-    const newY = y + currentShape.location[1];
-    if (newY >= 0) {
-      affectedRows.push(newY);
-    }
-  });
-
-  // Check only the affected rows
-  for (const y of affectedRows) {
+  for (let y = height - 1; y >= 0; y--) {
     if (occupiedBlocks[y].every((cell) => cell)) {
       // Remove the line
       occupiedBlocks.splice(y, 1);
       // Add new empty line at top
       occupiedBlocks.unshift(Array(width).fill(0));
       linesCleared++;
+      y++; // Check the same row again
     }
   }
 
   if (linesCleared > 0) {
-    updateScore(linesCleared);
+    setTimeout(updateScore, 30);
   }
 }
 
-function updateScore(linesCleared) {
+function updateScore() {
   let basePoints;
   switch (linesCleared) {
     case 1:
