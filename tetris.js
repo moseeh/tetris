@@ -115,7 +115,7 @@ function createShape() {
   }
   currentShape = nextShape;
   nextShape = getRandomShape();
-  updateNextPieceDisplay();
+  setTimeout(updateNextPieceDisplay, 100);
 }
 
 function getRandomShape() {
