@@ -284,23 +284,6 @@ function updateLivesDisplay() {
   livesDisplay.textContent = HEART_EMOJI.repeat(lives);
 }
 
-function gameOver() {
-  lives--;
-  updateLivesDisplay();
-  if (lives <= 0) {
-    state = 2;
-    timerRunning = false;
-    cancelAnimationFrame(animationId);
-    alert(`Game Over! Final Score: ${score}`);
-  } else {
-    occupiedBlocks = Array(height)
-      .fill()
-      .map(() => Array(width).fill(0));
-    createShape();
-    state = 1;
-  }
-}
-
 function update(time = 0) {
   if (state !== 1) return;
 
@@ -444,10 +427,47 @@ function togglePauseMenu(show) {
   pauseMenu.classList.toggle("hidden", !show);
 }
 
+function gameOverMenu(show) {
+  const gameOver = document.getElementById("gameover");
+  let overtext = document.getElementById("gametext");
+  overtext.textContent = show? `Game Over! High Score ${score}` : "Game Restarted!";
+  gameOver.classList.toggle("hidden", !show);
+}
+
+function gameOver() {
+  lives--;
+  updateLivesDisplay();
+  if (lives <= 0) {
+    state = 2;
+    timerRunning = false;
+    cancelAnimationFrame(animationId);
+    gameOverMenu(true)
+  } else {
+    occupiedBlocks = Array(height)
+      .fill()
+      .map(() => Array(width).fill(0));
+    createShape();
+    state = 1;
+  }
+}
+
 
 const resumeBtn = document.getElementById("resume-btn");
 const restartBtn = document.getElementById("restart-btn");
 const quitBtn = document.getElementById("quit-btn");
+const restart = document.getElementById("restart");
+const quit = document.getElementById("quit");
+
+restart.addEventListener("click", () => {
+  gameOverMenu(false);
+  startGame();
+});
+
+quit.addEventListener("click", () => {
+  if (confirm("Are you sure you want to quit the game")) {
+    window.location.reload();
+  }
+});
 
 resumeBtn.addEventListener("click", () => {
   state = 1;
