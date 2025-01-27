@@ -111,10 +111,6 @@ body {
     transition: transform 0.2s;
 }
 
-.scoreboard h2:hover {
-    transform: translateX(5px);
-}
-
 #lives {
     display: flex;
     gap: 5px;
@@ -149,11 +145,6 @@ body {
     justify-content: space-between;
     align-items: center;
     transition: transform 0.2s;
-}
-
-.controls p:hover {
-    transform: translateX(5px);
-    background: rgba(255, 255, 255, 0.1);
 }
 
 button {
@@ -304,8 +295,8 @@ button:active {
 }
 
 .hidden {
-    opacity: 0;
-    transform: scale(0.5) translate(-100%, -100%);
+    /* opacity: 0; */
+    transform: scale(1) translate(100%, 100%);
 }
 
 @keyframes glow {
