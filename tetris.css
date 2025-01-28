@@ -295,8 +295,7 @@ button:active {
 }
 
 .hidden {
-    /* opacity: 0; */
-    transform: scale(1) translate(100%, 100%);
+    display: none;
 }
 
 @keyframes glow {
