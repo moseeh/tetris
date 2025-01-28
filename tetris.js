@@ -282,8 +282,6 @@ function updateLivesDisplay() {
 }
 
 function update(time = 0) {
-  if (state !== 1) return;
-
   const deltaTime = time - lastTime;
   if (deltaTime < FRAME_TIME) {
     animationId = requestAnimationFrame(update);
@@ -292,17 +290,19 @@ function update(time = 0) {
 
   dropCounter += deltaTime;
 
-  if (dropCounter > GAME_SPEED / level) {
+  if (dropCounter > GAME_SPEED / level && state === 1){
     direction = "down";
     moveShape();
     dropCounter = 0;
   }
 
-  if (timerRunning) {
+  if (timerRunning && state === 1) {
     updateTimer(time);
   }
 
-  draw();
+  if (state === 1) {
+    draw();
+  }
   lastTime = time;
   animationId = requestAnimationFrame(update);
 }
