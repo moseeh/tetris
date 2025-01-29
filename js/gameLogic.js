@@ -1,9 +1,10 @@
-import { gameState } from './gameState.js';
-import { BOARD_WIDTH, BOARD_HEIGHT } from './constants.js';
-import { updateScore } from './ui.js';
-import { createShape } from './main.js';
-import { updateLivesDisplay } from './ui.js';
-import { gameOverMenu } from './ui.js';
+import { gameState } from "./gameState.js";
+import { BOARD_WIDTH, BOARD_HEIGHT } from "./constants.js";
+import { updateScore } from "./ui.js";
+import { createShape } from "./main.js";
+import { updateLivesDisplay } from "./ui.js";
+import { gameOverMenu } from "./ui.js";
+import { TetrisStory } from "./gameMode.js";
 
 // rotates a piece clockwise when the user clicks the up button
 export function rotateShape() {
@@ -36,7 +37,6 @@ export function checkCollision() {
 }
 
 export function moveShape() {
-
   let [x, y] = gameState.currentShape.location;
 
   if (gameState.direction === "down") y++;
@@ -50,7 +50,10 @@ export function moveShape() {
       gameState.currentShape.location = [x, y - 1];
       mergeShape();
     } else {
-      gameState.currentShape.location = [gameState.direction === "left" ? x + 1 : x - 1, y];
+      gameState.currentShape.location = [
+        gameState.direction === "left" ? x + 1 : x - 1,
+        y,
+      ];
     }
   }
 
@@ -94,18 +97,27 @@ function checkLines() {
 }
 
 function gameOver() {
-    gameState.lives--;
-    updateLivesDisplay();
-    if (gameState.lives <= 0) {
-      gameState.state = 2;
-      gameState.timerRunning = false;
-      cancelAnimationFrame(gameState.animationId);
+  gameState.lives--;
+  updateLivesDisplay();
+  if (gameState.lives <= 0) {
+    gameState.state = 2;
+    gameState.timerRunning = false;
+    cancelAnimationFrame(gameState.animationId);
+
+    const storyModal = document.getElementById("story-modal");
+    const storyText = document.getElementById("story-text");
+    storyText.innerText = TetrisStory.messages.gameOver;
+    storyModal.classList.remove("hidden");
+    document.getElementById("story-close").onclick = () => {
+      storyModal.classList.add("hidden");
       gameOverMenu(true);
-    } else {
-      gameState.occupiedBlocks = Array(BOARD_HEIGHT)
-        .fill()
-        .map(() => Array(BOARD_WIDTH).fill(0));
-      createShape();
-      gameState.state = 1;
-    }
+    };
+
+  } else {
+    gameState.occupiedBlocks = Array(BOARD_HEIGHT)
+      .fill()
+      .map(() => Array(BOARD_WIDTH).fill(0));
+    createShape();
+    gameState.state = 1;
+  }
 }
