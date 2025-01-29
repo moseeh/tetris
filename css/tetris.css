@@ -323,7 +323,7 @@ button:active {
     padding: 2rem;
     border-radius: 15px;
     text-align: center;
-    min-width: 300px;
+    width : 550px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: #fff;
