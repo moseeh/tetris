@@ -5,7 +5,6 @@ import { createShape } from "./main.js";
 import { updateLivesDisplay } from "./ui.js";
 import { gameOverMenu } from "./ui.js";
 import { TetrisStory } from "./gameMode.js";
-import { showStoryMessage } from "./main.js";
 
 // rotates a piece clockwise when the user clicks the up button
 export function rotateShape() {
@@ -114,11 +113,29 @@ function gameOver() {
       gameOverMenu(true);
     };
   } else {
-    
     const lostLifeMessages = TetrisStory.messages.lostLife;
     const randomMessage =
       lostLifeMessages[Math.floor(Math.random() * lostLifeMessages.length)];
-    showStoryMessage(randomMessage);
+
+    const storyModal = document.getElementById("story-modal");
+    const storyText = document.getElementById("story-text");
+
+    let wasRunning = gameState.state === 1;
+    if (wasRunning) {
+      gameState.state = 0;
+      gameState.timerRunning = false;
+    }
+
+    storyText.innerText = randomMessage;
+    storyModal.classList.remove("hidden");
+
+    document.getElementById("story-close").onclick = () => {
+      storyModal.classList.add("hidden");
+      if (wasRunning) {
+        gameState.state = 1;
+        gameState.timerRunning = true;
+      }
+    };
 
     gameState.occupiedBlocks = Array(BOARD_HEIGHT)
       .fill()
