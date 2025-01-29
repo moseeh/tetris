@@ -6,7 +6,7 @@ import { updateLivesDisplay, togglePauseMenu } from "./ui.js";
 import { setupEventListeners } from "./events.js";
 import { updateTimer } from "./ui.js";
 import { moveShape } from "./gameLogic.js";
-import { TetrisStory } from "../gameMode.js";
+import { TetrisStory } from "./gameMode.js";
 
 /**
  * Creates a new shape for the game.
