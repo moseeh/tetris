@@ -179,9 +179,7 @@ export function showStoryMessage(message) {
     if (wasRunning) {
       gameState.state = 1;
       gameState.timerRunning = true;
-      update();
     }
-    console.log(gameState.state);
   };
 }
 
