@@ -5,6 +5,7 @@ import { createShape } from "./main.js";
 import { updateLivesDisplay } from "./ui.js";
 import { gameOverMenu } from "./ui.js";
 import { TetrisStory } from "./gameMode.js";
+import { showStoryMessage } from "./main.js";
 
 // rotates a piece clockwise when the user clicks the up button
 export function rotateShape() {
@@ -112,8 +113,13 @@ function gameOver() {
       storyModal.classList.add("hidden");
       gameOverMenu(true);
     };
-
   } else {
+    
+    const lostLifeMessages = TetrisStory.messages.lostLife;
+    const randomMessage =
+      lostLifeMessages[Math.floor(Math.random() * lostLifeMessages.length)];
+    showStoryMessage(randomMessage);
+
     gameState.occupiedBlocks = Array(BOARD_HEIGHT)
       .fill()
       .map(() => Array(BOARD_WIDTH).fill(0));
