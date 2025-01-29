@@ -27,7 +27,22 @@ export function updateScore() {
   gameState.score += linePoints;
   gameState.lines += gameState.linesCleared;
 
-  const newLevel = Math.min(Math.floor(gameState.lines / 10) + 1, MAX_LEVEL);
+  const newLevel = Math.floor(gameState.lines / 10) + 1;
+  if (newLevel > MAX_LEVEL) {
+    gameState.state = 2;
+    gameState.timerRunning = false;
+    cancelAnimationFrame(gameState.animationId);
+
+    const storyModal = document.getElementById("story-modal");
+    const storyText = document.getElementById("story-text");
+    storyText.innerText = TetrisStory.messages.victory;
+    storyModal.classList.remove("hidden");
+    document.getElementById("story-close").onclick = () => {
+      storyModal.classList.add("hidden");
+      gameOverMenu(true);
+    };
+  }
+
   if (newLevel > gameState.level) {
     gameState.level = newLevel;
     showStoryMessage(TetrisStory.messages.levels[newLevel]);
