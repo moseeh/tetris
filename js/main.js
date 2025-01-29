@@ -6,6 +6,7 @@ import { updateLivesDisplay, togglePauseMenu } from "./ui.js";
 import { setupEventListeners } from "./events.js";
 import { updateTimer } from "./ui.js";
 import { moveShape } from "./gameLogic.js";
+import { TetrisStory } from "../gameMode.js";
 
 /**
  * Creates a new shape for the game.
@@ -89,7 +90,10 @@ export function update(time = 0) {
 
   gameState.dropCounter += deltaTime;
 
-  if (gameState.dropCounter > GAME_SPEED / gameState.level && gameState.state === 1) {
+  if (
+    gameState.dropCounter > GAME_SPEED / gameState.level &&
+    gameState.state === 1
+  ) {
     gameState.direction = "down";
     moveShape();
     gameState.dropCounter = 0;
@@ -133,15 +137,57 @@ export function startGame() {
   createShapes();
   createShape();
 
+  let wasRunning = gameState.state === 1;
+  if (wasRunning) {
+    gameState.state = 0;
+    gameState.timerRunning = false;
+  }
+  const storyModal = document.getElementById("story-modal");
+  const storyText = document.getElementById("story-text");
+  storyText.innerText = TetrisStory.messages.intro;
+  storyModal.classList.remove("hidden");
+
+  document.getElementById("story-close").onclick = () => {
+    storyModal.classList.add("hidden");
+    if (wasRunning) {
+        gameState.state = 1;
+        gameState.timerRunning = true;
+      }
+  };
+
   gameState.lastTime = 0;
   gameState.dropCounter = 0;
   update();
 }
-
-// Initialize event listeners
 setupEventListeners();
 
+export function showStoryMessage(message) {
+  const storyModal = document.getElementById("story-modal");
+  const storyText = document.getElementById("story-text");
+  let wasRunning = gameState.state === 1;
+  if (wasRunning) {
+    gameState.state = 0;
+    gameState.timerRunning = false;
+  }
+
+  storyText.innerText = message;
+  storyModal.classList.remove("hidden");
+
+  document.getElementById("story-close").onclick = () => {
+    storyModal.classList.add("hidden");
+
+    if (wasRunning) {
+      gameState.state = 1;
+      gameState.timerRunning = true;
+      update();
+    }
+    console.log(gameState.state);
+  };
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelector("button").addEventListener("click", startGame);
-  setupEventListeners();
+  const startButton = document.querySelector("#start");
+  startButton.addEventListener("click", () => {
+    startGame();
+  });
 });
