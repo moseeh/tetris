@@ -1,6 +1,8 @@
 import { HEART_EMOJI } from "./constants.js";
 import { gameState } from "./gameState.js";
 import { MAX_LEVEL } from "./constants.js";
+import { showStoryMessage } from "./main.js";
+import { TetrisStory } from "./gameMode.js";
 
 export function updateScore() {
   let basePoints;
@@ -28,6 +30,7 @@ export function updateScore() {
   const newLevel = Math.min(Math.floor(gameState.lines / 10) + 1, MAX_LEVEL);
   if (newLevel > gameState.level) {
     gameState.level = newLevel;
+    showStoryMessage(TetrisStory.messages.levels[newLevel]);
   }
 
   document.getElementById("score").textContent = gameState.score;
