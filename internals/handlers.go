@@ -100,6 +100,10 @@ func PostScoresHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func ReturnHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
 	//  Open or create the scores.json file
 	file, err := os.OpenFile("scores.json", os.O_RDWR|os.O_CREATE, 0o644)
 	if err != nil {
