@@ -134,6 +134,21 @@ function setupButtonListeners() {
   next.addEventListener("click", increasePage);
 }
 
+function updatePaginationControls() {
+  const previous = document.getElementById("previous");
+  const next = document.getElementById("next");
+
+  // Previous button control
+  previous.style.display = gameState.page === 1 ? "none" : "block";
+
+  // Next button control
+  const hasNextPage = (gameState.page) * PAGESIZE < gameState.leaderboard.length;
+  next.style.display = hasNextPage ? "block" : "none";
+  if ((gameState.page) * PAGESIZE === gameState.leaderboard.length) {
+    next.style.display = "none";
+  }
+}
+
 /**
  * Handles the quit button click.
  * Asks for confirmation before reloading the page.
