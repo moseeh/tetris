@@ -17,3 +17,4 @@ export const COLORS = [
 export const BOARD_HEIGHT = 20;
 export const BOARD_WIDTH = 10;
 export const CENTER = Math.floor(BOARD_WIDTH / 2) - 1;
+export const PAGESIZE = 5;
