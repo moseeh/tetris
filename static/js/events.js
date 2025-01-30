@@ -158,3 +158,35 @@ function handleQuit() {
     window.location.reload();
   }
 }
+
+async function score() {
+  const name = document.getElementById("playername").value;
+  const minute = document.getElementById("minutes").textContent;
+  const seconds = document.getElementById("seconds").textContent;
+  if (name === "" || name.length > 7) {
+    alert("Please enter your name or provide a shorter name");
+    return;
+  }
+
+  // Wait for the POST request to complete
+  await fetch("/scores", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name,
+      score: gameState.score,
+      time: `${minute}:${seconds}`,
+    }),
+  });
+
+  gameOverMenu(false);
+
+  // Wait for the GET request and parse the JSON response
+  const response = await fetch(`/return`);
+  gameState.leaderboard = await response.json();
+
+  // Now the leaderboard data is ready
+  displaySuggestions();
+}
