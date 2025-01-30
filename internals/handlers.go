@@ -21,7 +21,7 @@ type Player struct {
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	temp, err := template.ParseFiles("index.html")
 	if err != nil {
-		handler.ServerErrorHandler(w, r)
+		ServerErrorHandler(w, r)
 			return
 	}
 	temp.Execute(w, nil) // nil is passed as data to the template.
@@ -29,14 +29,14 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 func PostScoresHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		WrongMethodHandler(w,r)
 		return
 	}
 
 	var details Player
 	err := json.NewDecoder(r.Body).Decode(&details)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		BadRequestHandler(w,r)
 		return
 	}
 
@@ -45,7 +45,7 @@ func PostScoresHandler(w http.ResponseWriter, r *http.Request) {
 	// Open or create the scores.json file
 	file, err := os.OpenFile("scores.json", os.O_RDWR|os.O_CREATE, 0o644)
 	if err != nil {
-		handler.ServerErrorHandler(w, r)
+		ServerErrorHandler(w, r)
 			return
 	}
 	defer file.Close()
@@ -54,7 +54,7 @@ func PostScoresHandler(w http.ResponseWriter, r *http.Request) {
 	var existingDetails []Player
 	decoder := json.NewDecoder(file)
 	if err := decoder.Decode(&existingDetails); err != nil && err != io.EOF {
-		handler.ServerErrorHandler(w, r)
+		ServerErrorHandler(w, r)
 			return
 	}
 
@@ -81,18 +81,18 @@ func PostScoresHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Reset file pointer and truncate
 	if _, err := file.Seek(0, 0); err != nil {
-		handler.ServerErrorHandler(w, r)
+		ServerErrorHandler(w, r)
 			return
 	}
 	if err := file.Truncate(0); err != nil {
-		handler.ServerErrorHandler(w, r)
+		ServerErrorHandler(w, r)
 			return
 	}
 
 	// Write updated data
 	encoder := json.NewEncoder(file)
 	if err := encoder.Encode(existingDetails); err != nil {
-		handler.ServerErrorHandler(w, r)
+		ServerErrorHandler(w, r)
 			return
 	}
 
@@ -101,13 +101,13 @@ func PostScoresHandler(w http.ResponseWriter, r *http.Request) {
 
 func ReturnHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		WrongMethodHandler(w,r)
 		return
 	}
 	//  Open or create the scores.json file
 	file, err := os.OpenFile("scores.json", os.O_RDWR|os.O_CREATE, 0o644)
 	if err != nil {
-		handler.ServerErrorHandler(w, r)
+		ServerErrorHandler(w, r)
 			return
 	}
 	defer file.Close()
@@ -116,7 +116,7 @@ func ReturnHandler(w http.ResponseWriter, r *http.Request) {
 	var existingDetails []Player
 	decoder := json.NewDecoder(file)
 	if err := decoder.Decode(&existingDetails); err != nil && err != io.EOF {
-		http.Error(w, "Unable to read scores file", http.StatusInternalServerError)
+		ServerErrorHandler(w, r)
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
@@ -148,7 +148,7 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, html)
 }
 
-func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
+func ServerErrorHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusInternalServerError)
 	w.Header().Set("Content-Type", "text/html")
 
@@ -162,9 +162,9 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
     <body>
         <div class="container">
             <h1 class="error-code">500</h1>
-            <p class="message">Something is wrong in the matrix</p>
-            <p class="message">A tetromino is broken, It's not your fault though</p>
-            <a href="/" class="home-button">Return to Game</a>
+            <p class="message">Critical system malfunction!</p>
+            <p class="message">Our tetrominos are in chaos. Engineers dispatched.</p>
+            <a href="/" class="home-button">Return to Safety</a>
         </div>
     </body>
     </html>
@@ -187,9 +187,9 @@ func BadRequestHandler(w http.ResponseWriter, r *http.Request) {
     <body>
         <div class="container">
             <h1 class="error-code">400</h1>
-            <p class="message">Something is wrong in the matrix</p>
-            <p class="message">A tetromino is broken, It's not your fault though</p>
-            <a href="/" class="home-button">Return to Game</a>
+            <p class="message">Invalid tetromino sequence detected</p>
+            <p class="message">Check your input patterns</p>
+            <a href="/" class="home-button">Reinitialize Request</a>
         </div>
     </body>
     </html>
@@ -206,15 +206,15 @@ func WrongMethodHandler(w http.ResponseWriter, r *http.Request) {
     <!DOCTYPE html>
     <html>
     <head>
-        <title>400 - Bad Request</title>
+        <title>404 - Wrong Method</title>
         <link rel="stylesheet" href="static/css/error.css">
     </head>
     <body>
         <div class="container">
-            <h1 class="error-code">400</h1>
-            <p class="message">Something is wrong in the matrix</p>
-            <p class="message">A tetromino is broken, It's not your fault though</p>
-            <a href="/" class="home-button">Return to Game</a>
+            <h1 class="error-code">405</h1>
+            <p class="message">Illegal rotation attempted!</p>
+            <p class="message">This move isn't in the tetris handbook</p>
+            <a href="/" class="home-button">Try Different Approach</a>
         </div>
     </body>
     </html>
