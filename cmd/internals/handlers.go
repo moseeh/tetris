@@ -10,6 +10,13 @@ import (
 	"strconv"
 )
 
+type Player struct {
+	Name  string `json:"name"`
+	Rank  string `json:"rank"`
+	Time  string `json:"time"`
+	Score int    `json:"score"`
+}
+
 func PostScoresHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
