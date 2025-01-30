@@ -12,6 +12,9 @@ import { gameOverMenu } from './ui.js';
  * Supports movement, rotation, pause, and instant drop.
  */
 export function handleInput(e) {
+  if (gameState.state === 2 && e.key !== " ") {
+    return;
+  }
   if (e.key === "Enter" && gameState.state === 3) {
     startGame();
     return;
