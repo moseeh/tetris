@@ -1,8 +1,9 @@
-package main
+package handler
 
 import (
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"io"
 	"net/http"
 	"os"
@@ -15,6 +16,15 @@ type Player struct {
 	Rank  string `json:"rank"`
 	Time  string `json:"time"`
 	Score int    `json:"score"`
+}
+
+func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	temp, err := template.ParseFiles("index.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	temp.Execute(w, nil) // nil is passed as data to the template.
 }
 
 func PostScoresHandler(w http.ResponseWriter, r *http.Request) {
