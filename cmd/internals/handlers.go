@@ -88,3 +88,23 @@ func PostScoresHandler(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 }
+
+func ReturnHandler(w http.ResponseWriter, r *http.Request) {
+	//  Open or create the scores.json file
+	file, err := os.OpenFile("scores.json", os.O_RDWR|os.O_CREATE, 0o644)
+	if err != nil {
+		http.Error(w, "Unable to open scores file", http.StatusInternalServerError)
+		return
+	}
+	defer file.Close()
+
+	// Read existing data
+	var existingDetails []Player
+	decoder := json.NewDecoder(file)
+	if err := decoder.Decode(&existingDetails); err != nil && err != io.EOF {
+		http.Error(w, "Unable to read scores file", http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(existingDetails)
+}
