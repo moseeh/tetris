@@ -122,3 +122,7 @@ func ReturnHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(existingDetails)
 }
+
+func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
+	
+}
