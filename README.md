@@ -1,4 +1,4 @@
-# Make Your Game History: Tetris
+# Make Your Game Score Handling: Tetris
 
 A classic Tetris implementation with game built with plain JavaScript and DOM, focusing on performance and smooth gameplay.
 
