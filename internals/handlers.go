@@ -21,8 +21,8 @@ type Player struct {
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	temp, err := template.ParseFiles("index.html")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+		handler.ServerErrorHandler(w, r)
+			return
 	}
 	temp.Execute(w, nil) // nil is passed as data to the template.
 }
@@ -45,8 +45,8 @@ func PostScoresHandler(w http.ResponseWriter, r *http.Request) {
 	// Open or create the scores.json file
 	file, err := os.OpenFile("scores.json", os.O_RDWR|os.O_CREATE, 0o644)
 	if err != nil {
-		http.Error(w, "Unable to open scores file", http.StatusInternalServerError)
-		return
+		handler.ServerErrorHandler(w, r)
+			return
 	}
 	defer file.Close()
 
@@ -54,8 +54,8 @@ func PostScoresHandler(w http.ResponseWriter, r *http.Request) {
 	var existingDetails []Player
 	decoder := json.NewDecoder(file)
 	if err := decoder.Decode(&existingDetails); err != nil && err != io.EOF {
-		http.Error(w, "Unable to read scores file", http.StatusInternalServerError)
-		return
+		handler.ServerErrorHandler(w, r)
+			return
 	}
 
 	// Append new player data
@@ -81,19 +81,19 @@ func PostScoresHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Reset file pointer and truncate
 	if _, err := file.Seek(0, 0); err != nil {
-		http.Error(w, "Unable to seek in scores file", http.StatusInternalServerError)
-		return
+		handler.ServerErrorHandler(w, r)
+			return
 	}
 	if err := file.Truncate(0); err != nil {
-		http.Error(w, "Unable to truncate scores file", http.StatusInternalServerError)
-		return
+		handler.ServerErrorHandler(w, r)
+			return
 	}
 
 	// Write updated data
 	encoder := json.NewEncoder(file)
 	if err := encoder.Encode(existingDetails); err != nil {
-		http.Error(w, "Unable to write to scores file", http.StatusInternalServerError)
-		return
+		handler.ServerErrorHandler(w, r)
+			return
 	}
 
 	w.WriteHeader(http.StatusOK)
@@ -107,8 +107,8 @@ func ReturnHandler(w http.ResponseWriter, r *http.Request) {
 	//  Open or create the scores.json file
 	file, err := os.OpenFile("scores.json", os.O_RDWR|os.O_CREATE, 0o644)
 	if err != nil {
-		http.Error(w, "Unable to open scores file", http.StatusInternalServerError)
-		return
+		handler.ServerErrorHandler(w, r)
+			return
 	}
 	defer file.Close()
 
@@ -147,3 +147,79 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprint(w, html)
 }
+
+func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusInternalServerError)
+	w.Header().Set("Content-Type", "text/html")
+
+	html := `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>500 - Internal Server error</title>
+        <link rel="stylesheet" href="static/css/error.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="error-code">500</h1>
+            <p class="message">Something is wrong in the matrix</p>
+            <p class="message">A tetromino is broken, It's not your fault though</p>
+            <a href="/" class="home-button">Return to Game</a>
+        </div>
+    </body>
+    </html>
+    `
+
+	fmt.Fprint(w, html)
+}
+
+func BadRequestHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusBadRequest)
+	w.Header().Set("Content-Type", "text/html")
+
+	html := `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>400 - Bad Request</title>
+        <link rel="stylesheet" href="static/css/error.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="error-code">400</h1>
+            <p class="message">Something is wrong in the matrix</p>
+            <p class="message">A tetromino is broken, It's not your fault though</p>
+            <a href="/" class="home-button">Return to Game</a>
+        </div>
+    </body>
+    </html>
+    `
+
+	fmt.Fprint(w, html)
+}
+
+func WrongMethodHandler(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusMethodNotAllowed)
+	w.Header().Set("Content-Type", "text/html")
+
+	html := `
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>400 - Bad Request</title>
+        <link rel="stylesheet" href="static/css/error.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="error-code">400</h1>
+            <p class="message">Something is wrong in the matrix</p>
+            <p class="message">A tetromino is broken, It's not your fault though</p>
+            <a href="/" class="home-button">Return to Game</a>
+        </div>
+    </body>
+    </html>
+    `
+
+	fmt.Fprint(w, html)
+}
+
