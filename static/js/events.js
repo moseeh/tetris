@@ -216,3 +216,13 @@ function displaySuggestions() {
   scoreboard.classList.toggle("hidden", false);
   setTimeout(updatePaginationControls, 0);
 }
+
+function increasePage() {
+  gameState.page += 1;
+  displaySuggestions();
+}
+
+function decreasePage() {
+  gameState.page -= 1;
+  displaySuggestions();
+}
