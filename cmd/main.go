@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"text/template"
 )
 
 func main() {
@@ -14,4 +15,13 @@ func main() {
 
 	fmt.Println("Server started http://localhost:8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
+}
+
+func HomeHandler(w http.ResponseWriter, r *http.Request) {
+	temp, err := template.ParseFiles("index.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	temp.Execute(w, nil) // nil is passed as data to the template.
 }
