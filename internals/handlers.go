@@ -124,86 +124,15 @@ func ReturnHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
-    w.WriteHeader(http.StatusNotFound)
-    w.Header().Set("Content-Type", "text/html")
-    
-    html := `
+	w.WriteHeader(http.StatusNotFound)
+	w.Header().Set("Content-Type", "text/html")
+
+	html := `
     <!DOCTYPE html>
     <html>
     <head>
         <title>404 - Page Not Found</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 20px;
-                background-color: #000;
-                color: #fff;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                overflow: hidden;
-            }
-            
-            .container {
-                text-align: center;
-                padding: 40px;
-                background: linear-gradient(145deg, #2a2a2a, #222);
-                border-radius: 15px;
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-                max-width: 600px;
-            }
-            
-            .error-code {
-                font-size: 8em;
-                font-weight: bold;
-                margin: 0;
-                background: linear-gradient(45deg, #ff0000, #00ff00, #0000ff, #ffff00);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                animation: glow 2s infinite alternate;
-            }
-            
-            .message {
-                font-size: 1.5em;
-                margin: 20px 0;
-                color: #ccc;
-            }
-            
-            .home-button {
-                background: linear-gradient(145deg, #444, #333);
-                color: #fff;
-                border: none;
-                padding: 12px 30px;
-                border-radius: 8px;
-                cursor: pointer;
-                font-weight: bold;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                transition: all 0.3s ease;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-                text-decoration: none;
-                display: inline-block;
-                margin-top: 20px;
-            }
-            
-            .home-button:hover {
-                background: linear-gradient(145deg, #555, #444);
-                transform: translateY(-2px);
-                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            }
-            
-            @keyframes glow {
-                from {
-                    text-shadow: 0 0 10px rgba(255,255,255,0.3);
-                }
-                to {
-                    text-shadow: 0 0 20px rgba(255,255,255,0.6);
-                }
-            }
-        </style>
+        <link rel="stylesheet" href="static/css/error.css">
     </head>
     <body>
         <div class="container">
@@ -215,6 +144,6 @@ func NotFoundHandler(w http.ResponseWriter, r *http.Request) {
     </body>
     </html>
     `
-    
-    fmt.Fprint(w, html)
+
+	fmt.Fprint(w, html)
 }
