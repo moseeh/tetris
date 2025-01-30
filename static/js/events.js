@@ -190,3 +190,29 @@ async function score() {
   // Now the leaderboard data is ready
   displaySuggestions();
 }
+
+function displaySuggestions() {
+  const startIndex = (gameState.page - 1) * PAGESIZE;
+  const endIndex = startIndex + PAGESIZE;
+  const scoreboard = document.getElementById("scores");
+  const tableBody = document.getElementById("data-table-body");
+  const pagination = document.getElementById("pagination");
+   const players = gameState.leaderboard.slice(
+      startIndex,
+      endIndex
+    );
+  
+  tableBody.innerHTML = "";
+  players.forEach((player) => {
+    const row = `<tr>
+    <td>${player.rank}</td>
+    <td>${player.name}</td>
+    <td>${player.score}</td>
+    <td>${player.time}</td>
+    </tr>`;
+    tableBody.innerHTML += row;
+  });
+  pagination.textContent = gameState.page;
+  scoreboard.classList.toggle("hidden", false);
+  setTimeout(updatePaginationControls, 0);
+}
