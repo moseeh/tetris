@@ -25,6 +25,7 @@ A classic Tetris implementation with game built with plain JavaScript and DOM, f
   - Three-life system
 - **Performance Optimized**: Minimal DOM layers and targeted cell updates
 - **Story Mode** : A story line to engage players and makeit interesting
+- **Leaderboard** : A board to show the scores of previous players
 
 ## Controls
 
@@ -74,16 +75,28 @@ A classic Tetris implementation with game built with plain JavaScript and DOM, f
 
 ```bash
 
-git clone https://learn.zone01kisumu.ke/git/moonyango/make-your-game-history
+git clone https://learn.zone01kisumu.ke/git/aosindo/make-your-game-score-handling.git
 
-cd make-your-game-history
+cd make-your-game-score-handling
 
 ```
 
-2. Open with liveServer in modern browser
+2. Run the program
 
+```bash
 
-3. Press Enter to start
+make
+
+```
+
+3. Open your browser with link
+
+```bash
+
+http://localhost:8080
+
+```
+
 
 ## Optimization Strategies
 

@@ -18,5 +18,7 @@ export const gameState = {
   timeElapsed: 0,
   lastTimerUpdate: 0,
   timerRunning: false,
-  linesCleared: 0
+  linesCleared: 0,
+  leaderboard: null,
+  page: 1
 };

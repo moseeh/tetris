@@ -374,6 +374,84 @@ button:active {
     display: none;
 }
 
+/* Add to tetris.css */
+#scores .modal-content {
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+#scores table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#scores th,
+#scores td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#scores th {
+    background: linear-gradient(145deg, #444, #333);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+}
+
+#scores tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+#scores tbody tr:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Pagination specific to scores modal */
+#scores .pages {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    margin-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#scores #pagination {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+#scores #pagination button {
+    min-width: 32px;
+    padding: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#scores #pagination button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#scores #previous,
+#scores #next {
+    background: linear-gradient(145deg, #444, #333);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+}
+
+#scores #previous:hover,
+#scores #next:hover {
+    background: linear-gradient(145deg, #555, #444);
+}
+
 @keyframes glow {
     0% { filter: brightness(1); }
     50% { filter: brightness(1.2); }

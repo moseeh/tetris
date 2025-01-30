@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tetris-Game</title>
-    <link rel="stylesheet" href="css/tetris.css">
+    <link rel="stylesheet" href="static/css/tetris.css">
 </head>
 
 <body>
@@ -68,14 +68,42 @@
         <div id="gameover" class="modal hidden">
             <div class="modal-content">
                 <h2 id="gametext">Game Over</h2>
+                <input id="playername" type="text" placeholder="Enter your name" required>
                 <div class="menu-buttons">
-                    <button id="restart">Restart Game</button>
-                    <button id="quit">Quit Game</button>
+                    <button id="submitscore">Submit</button> 
+                </div>
+            </div>
+        </div>
+
+        <div id="scores" class="modal hidden">
+            <div class="modal-content">
+                <h2 id="gametext">Leaderboard</h2>
+                <div id="scoreboard">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Name</th>
+                                <th>Score</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="data-table-body"></tbody>
+                    </table>
+                    <div class="pages">
+                        <button id="previous"><</button>
+                        <div id="pagination"></div>
+                        <button id="next">></button>
+                    </div>
+                </div>
+                <div class="menu-buttons">
+                    <button id="restart" >Restart Game</button>
+                    <button id="quit" >Quit Game</button>
                 </div>
             </div>
         </div>
     </div>
-    <script type="module" src="js/main.js"></script>
+    <script type="module" src="static/js/main.js"></script>
 </body>
 
 </html>
