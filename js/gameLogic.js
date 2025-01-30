@@ -113,6 +113,7 @@ function gameOver() {
       gameOverMenu(true);
     };
   } else {
+
     const lostLifeMessages = TetrisStory.messages.lostLife;
     const randomMessage =
       lostLifeMessages[Math.floor(Math.random() * lostLifeMessages.length)];
@@ -120,6 +121,7 @@ function gameOver() {
     const storyModal = document.getElementById("story-modal");
     const storyText = document.getElementById("story-text");
 
+    console.log(gameState.state)
     let wasRunning = gameState.state === 1;
     if (wasRunning) {
       gameState.state = 0;
@@ -141,6 +143,5 @@ function gameOver() {
       .fill()
       .map(() => Array(BOARD_WIDTH).fill(0));
     createShape();
-    gameState.state = 1;
   }
 }
