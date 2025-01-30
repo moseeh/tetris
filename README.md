@@ -1,6 +1,6 @@
-# Make Your Game: Tetris
+# Make Your Game History: Tetris
 
-A classic Tetris implementation built with plain JavaScript and DOM, focusing on performance and smooth gameplay.
+A classic Tetris implementation with game built with plain JavaScript and DOM, focusing on performance and smooth gameplay.
 
 ## Features
 
@@ -24,6 +24,7 @@ A classic Tetris implementation built with plain JavaScript and DOM, focusing on
   - Level-based speed increases
   - Three-life system
 - **Performance Optimized**: Minimal DOM layers and targeted cell updates
+- **Story Mode** : A story line to engage players and makeit interesting
 
 ## Controls
 
@@ -73,19 +74,14 @@ A classic Tetris implementation built with plain JavaScript and DOM, focusing on
 
 ```bash
 
-git clone https://learn.zone01kisumu.ke/git/moonyango/make-your-game
+git clone https://learn.zone01kisumu.ke/git/moonyango/make-your-game-history
 
-cd make-your-game
-
-```
-
-2. Open `index.html` in modern browser
-
-```bash
-
-open index.html
+cd make-your-game-history
 
 ```
+
+2. Open with liveServer in modern browser
+
 
 3. Press Enter to start
 

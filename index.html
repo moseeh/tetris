@@ -5,11 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tetris-Game</title>
-    <link rel="stylesheet" href="tetris.css">
+    <link rel="stylesheet" href="css/tetris.css">
 </head>
 
 <body>
+    
     <div class="game-wrapper">
+        <div class="logo-container">
+            <div class="tetris-text">
+                <div class="letter">T</div>
+                <div class="letter">E</div>
+                <div class="letter">T</div>
+                <div class="letter">R</div>
+                <div class="letter">I</div>
+                <div class="letter">S</div>
+            </div>
+            <div class="subtitle">Journey of the Architect</div>
+        </div>
         <div class="timer-container">Time:
             <div id="timer"> <span id="minutes">00</span>:<span id="seconds">00</span></div>
         </div>
@@ -32,7 +44,7 @@
                     <p>Space : Hard drop</p>
                     <p>P : Pause</p>
                 </div>
-                <button onclick="startGame()" id="start">Start Game</button>
+                <button id="start">Start Game</button>
             </div>
         </div>
         <div id="pause-menu" class="modal hidden">
@@ -45,6 +57,14 @@
                 </div>
             </div>
         </div>
+        <div id="story-modal" class="modal hidden">
+            <div class="modal-content">
+                <h2 id="story-title">Story</h2>
+                <p id="story-text"></p>
+                <button id="story-close">Continue</button>
+            </div>
+        </div>
+        
         <div id="gameover" class="modal hidden">
             <div class="modal-content">
                 <h2 id="gametext">Game Over</h2>
@@ -55,7 +75,7 @@
             </div>
         </div>
     </div>
-    <script src="tetris.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 
 </html>

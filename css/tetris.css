@@ -10,6 +10,82 @@ body {
     height: 100vh;
 }
 
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* The TETRIS text styling */
+.tetris-text {
+    font-size: 64px;
+    font-weight: bold;
+    display: flex;
+    gap: 8px;
+}
+
+/* Individual letters */
+.letter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border: 3px solid;
+    animation: glow 2s infinite alternate;
+}
+
+/* Tetris piece colors for each letter */
+.letter:nth-child(1) { color: #ff0000; border-color: #ff0000; } /* T - Red */
+.letter:nth-child(2) { color: #00ff00; border-color: #00ff00; } /* E - Green */
+.letter:nth-child(3) { color: #0000ff; border-color: #0000ff; } /* T - Blue */
+.letter:nth-child(4) { color: #ffff00; border-color: #ffff00; } /* R - Yellow */
+.letter:nth-child(5) { color: #00ffff; border-color: #00ffff; } /* I - Cyan */
+.letter:nth-child(6) { color: #ff00ff; border-color: #ff00ff; } /* S - Magenta */
+
+/* Decorative tetromino shapes above the text */
+.tetromino-row {
+    display: flex;
+    gap: 10px;
+}
+
+.block {
+    width: 20px;
+    height: 20px;
+    border: 2px solid;
+}
+
+/* Different tetromino shapes */
+.shape-i { color: #00ffff; border-color: #00ffff; }
+.shape-t { color: #ff00ff; border-color: #ff00ff; }
+.shape-l { color: #ff8000; border-color: #ff8000; }
+.shape-z { color: #ff0000; border-color: #ff0000; }
+
+/* Glowing animation for the letters */
+@keyframes glow {
+    from {
+        text-shadow: 0 0 5px currentColor,
+                   0 0 10px currentColor,
+                   0 0 15px currentColor;
+        box-shadow: 0 0 5px currentColor;
+    }
+    to {
+        text-shadow: 0 0 10px currentColor,
+                   0 0 20px currentColor,
+                   0 0 30px currentColor;
+        box-shadow: 0 0 10px currentColor;
+    }
+}
+
+/* Subtitle styling */
+.subtitle {
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
 .game-wrapper {
     display: flex;
     flex-direction: column;
@@ -247,7 +323,7 @@ button:active {
     padding: 2rem;
     border-radius: 15px;
     text-align: center;
-    min-width: 300px;
+    width : 550px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: #fff;
