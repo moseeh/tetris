@@ -5,7 +5,8 @@ import { startGame } from './main.js';
 import { checkCollision } from './gameLogic.js';
 import { mergeShape } from './gameLogic.js';
 import { update } from './main.js';
-import { gameOverMenu } from './ui.js';
+import { gameOverMenu } from './ui.js'
+import { PAGESIZE } from "./constants.js";;
 
 /**
  * Handles keyboard input for controlling the game.
@@ -98,8 +99,11 @@ function setupButtonListeners() {
   const resumeBtn = document.getElementById("resume-btn");
   const restartBtn = document.getElementById("restart-btn");
   const quitBtn = document.getElementById("quit-btn");
+  const submitcsore = document.getElementById("submitscore");
   const restart = document.getElementById("restart");
   const quit = document.getElementById("quit");
+  const previous = document.getElementById("previous");
+  const next = document.getElementById("next");
 
   resumeBtn.addEventListener("click", () => {
     gameState.state = 1;
@@ -118,9 +122,16 @@ function setupButtonListeners() {
   quit.addEventListener("click", handleQuit);
 
   restart.addEventListener("click", () => {
-    gameOverMenu(false);
+    const scoreboard = document.getElementById("scores");
+    scoreboard.classList.toggle("hidden", true);
     startGame();
   });
+
+  submitcsore.addEventListener("click", score);
+
+  previous.addEventListener("click", decreasePage);
+
+  next.addEventListener("click", increasePage);
 }
 
 /**
