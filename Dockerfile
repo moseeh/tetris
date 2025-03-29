@@ -1,4 +1,4 @@
-FROM golang:1.23.4 AS builder
+FROM golang:1.21 AS builder
 
 WORKDIR /app
 
@@ -7,7 +7,8 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o tetris ./cmd/main.go
+# Add CGO_ENABLED=0 to create a statically linked binary
+RUN CGO_ENABLED=0 GOOS=linux go build -o tetris ./cmd/main.go
 
 FROM alpine:latest
 
@@ -17,6 +18,10 @@ COPY --from=builder /app/tetris .
 COPY static/ ./static/
 COPY index.html ./
 
+# Install CA certificates for any HTTPS requests your app might make
+RUN apk --no-cache add ca-certificates
+
 EXPOSE 8080
 
-CMD ["./tetris"]
+# Simplify the CMD to directly run the binary
+CMD ["/app/tetris"]
