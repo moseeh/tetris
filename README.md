@@ -1,6 +1,7 @@
 # Tetris
 
 A classic Tetris implementation with game built with plain JavaScript and DOM, focusing on performance and smooth gameplay.
+You can play it [here](https://tetris-production-2e33.up.railway.app/)
 
 ## Features
 
