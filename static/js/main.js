@@ -7,11 +7,24 @@ import { setupEventListeners } from "./events.js";
 import { updateTimer } from "./ui.js";
 import { moveShape } from "./gameLogic.js";
 import { TetrisStory } from "./gameMode.js";
+// Import background tilemap renderer
+import { renderTilemap } from "./tilemapRenderer.js";
 
-/**
- * Creates a new shape for the game.
- * The next shape is determined randomly and assigned to the game state.
- */
+// Import your background tilemap data (choose one or decide based on some condition)
+import { BackgroundCelestial } from "./tilemaps/backgroundCelestial.js";
+import { BackgroundFractured } from "./tilemaps/backgroundFractured.js";
+import { BackgroundReborn } from "./tilemaps/backgroundReborn.js";
+
+const backgrounds = [
+  BackgroundCelestial,
+  BackgroundFractured,
+  BackgroundReborn,
+];
+const chosenBackground =
+  backgrounds[Math.floor(Math.random() * backgrounds.length)];
+const tilesetUrl = "static/images/bg-tileset.png";
+renderTilemap(chosenBackground, "background-container", tilesetUrl);
+
 export function createShape() {
   if (!gameState.nextShape) {
     gameState.nextShape = getRandomShape();
@@ -150,9 +163,9 @@ export function startGame() {
   document.getElementById("story-close").onclick = () => {
     storyModal.classList.add("hidden");
     if (wasRunning) {
-        gameState.state = 1;
-        gameState.timerRunning = true;
-      }
+      gameState.state = 1;
+      gameState.timerRunning = true;
+    }
   };
 
   gameState.lastTime = 0;
