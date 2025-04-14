@@ -1,109 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tetris-Game</title>
-    <link rel="stylesheet" href="static/css/tetris.css">
-</head>
+    <link rel="stylesheet" href="static/css/tetris.css" />
+  </head>
 
-<body>
-    
+  <body>
     <div class="game-wrapper">
-        <div class="logo-container">
-            <div class="tetris-text">
-                <div class="letter">T</div>
-                <div class="letter">E</div>
-                <div class="letter">T</div>
-                <div class="letter">R</div>
-                <div class="letter">I</div>
-                <div class="letter">S</div>
-            </div>
-            <div class="subtitle">Journey of the Architect</div>
+      <div class="logo-container">
+        <div class="tetris-text">
+          <div class="letter">T</div>
+          <div class="letter">E</div>
+          <div class="letter">T</div>
+          <div class="letter">R</div>
+          <div class="letter">I</div>
+          <div class="letter">S</div>
         </div>
-        <div class="timer-container">Time:
-            <div id="timer"> <span id="minutes">00</span>:<span id="seconds">00</span></div>
+        <div class="subtitle">Journey of the Architect</div>
+      </div>
+      <div class="timer-container">
+        Time:
+        <div id="timer">
+          <span id="minutes">00</span>:<span id="seconds">00</span>
         </div>
-        <div class="tetris-container">
-            <div id="tetris-board">Press Enter To start</div>
-            <div class="info-panel">
-                <div class="scoreboard">
-                    <h2>Score: <span id="score">0</span></h2>
-                    <h2>Level: <span id="level">1</span></h2>
-                    <h2>Lines: <span id="lines">0</span></h2>
-                    <h2 class="lives-display">Lives <span id="lives">❤️❤️❤️</span></h2>
-                </div>
-                <h3>Next Piece:</h3>
-                <div id="tetris-next"></div>
-                <div class="controls">
-                    <h3>Controls:</h3>
-                    <p>← → : Move left/right</p>
-                    <p>↑ : Rotate</p>
-                    <p>↓ : Soft drop</p>
-                    <p>Space : Hard drop</p>
-                    <p>P : Pause</p>
-                </div>
-                <button id="start">Start Game</button>
-            </div>
+      </div>
+      <div class="tetris-container">
+        <div id="tetris-board">Press Enter To start</div>
+        <div class="info-panel">
+          <div class="scoreboard">
+            <h2>Score: <span id="score">0</span></h2>
+            <h2>Level: <span id="level">1</span></h2>
+            <h2>Lines: <span id="lines">0</span></h2>
+            <h2 class="lives-display">Lives <span id="lives">❤️❤️❤️</span></h2>
+          </div>
+          <h3>Next Piece:</h3>
+          <div id="tetris-next"></div>
+          <div class="controls">
+            <h3>Controls:</h3>
+            <p>← → : Move left/right</p>
+            <p>↑ : Rotate</p>
+            <p>↓ : Soft drop</p>
+            <p>Space : Hard drop</p>
+            <p>P : Pause</p>
+          </div>
+          <button id="start">Start Game</button>
         </div>
-        <div id="pause-menu" class="modal hidden">
-            <div class="modal-content">
-                <h2>Game Paused</h2>
-                <div class="menu-buttons">
-                    <button id="resume-btn">Resume Game</button>
-                    <button id="restart-btn">Restart Game</button>
-                    <button id="quit-btn">Quit Game</button>
-                </div>
-            </div>
+      </div>
+      <div id="pause-menu" class="modal hidden">
+        <div class="modal-content">
+          <h2>Game Paused</h2>
+          <div class="menu-buttons">
+            <button id="resume-btn">Resume Game</button>
+            <button id="restart-btn">Restart Game</button>
+            <button id="quit-btn">Quit Game</button>
+          </div>
         </div>
-        <div id="story-modal" class="modal hidden">
-            <div class="modal-content">
-                <h2 id="story-title">Story</h2>
-                <p id="story-text"></p>
-                <button id="story-close">Continue</button>
-            </div>
+      </div>
+      <div id="story-modal" class="modal hidden">
+        <div class="modal-content">
+          <h2 id="story-title">Story</h2>
+          <p id="story-text"></p>
+          <button id="story-close">Continue</button>
         </div>
-        
-        <div id="gameover" class="modal hidden">
-            <div class="modal-content">
-                <h2 id="gametext">Game Over</h2>
-                <input id="playername" type="text" placeholder="Enter your name" required>
-                <div class="menu-buttons">
-                    <button id="submitscore">Submit</button> 
-                </div>
-            </div>
-        </div>
+      </div>
 
-        <div id="scores" class="modal hidden">
-            <div class="modal-content">
-                <h2 id="gametext">Leaderboard</h2>
-                <div id="scoreboard">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Rank</th>
-                                <th>Name</th>
-                                <th>Score</th>
-                                <th>Time</th>
-                            </tr>
-                        </thead>
-                        <tbody id="data-table-body"></tbody>
-                    </table>
-                    <div class="pages">
-                        <button id="previous"><</button>
-                        <div id="pagination"></div>
-                        <button id="next">></button>
-                    </div>
-                </div>
-                <div class="menu-buttons">
-                    <button id="restart" >Restart Game</button>
-                    <button id="quit" >Quit Game</button>
-                </div>
-            </div>
+      <div id="gameover" class="modal hidden">
+        <div class="modal-content">
+          <h2 id="gametext">Game Over</h2>
+          <input
+            id="playername"
+            type="text"
+            placeholder="Enter your name"
+            required
+          />
+          <div class="menu-buttons">
+            <button id="submitscore">Submit</button>
+          </div>
         </div>
+      </div>
+
+      <div id="scores" class="modal hidden">
+        <div class="modal-content">
+          <h2 id="gametext">Leaderboard</h2>
+          <div id="scoreboard">
+            <table>
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Name</th>
+                  <th>Score</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody id="data-table-body"></tbody>
+            </table>
+            <div class="pages">
+              <button id="previous"></button>
+              <div id="pagination"></div>
+              <button id="next">></button>
+            </div>
+          </div>
+          <div class="menu-buttons">
+            <button id="restart">Restart Game</button>
+            <button id="quit">Quit Game</button>
+          </div>
+        </div>
+      </div>
     </div>
     <script type="module" src="static/js/main.js"></script>
-</body>
-
+  </body>
 </html>
