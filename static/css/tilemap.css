@@ -1,0 +1,292 @@
+/* static/css/tilemap.css */
+
+/* Base tile styling */
+.tile {
+    position: absolute;
+    box-sizing: border-box;
+    will-change: transform;
+    /* Optimize for animations */
+    backface-visibility: hidden;
+    /* Improve rendering performance */
+}
+
+/* Circuit Board Theme Tiles */
+.tile-1 {
+    background: linear-gradient(45deg, #0f4c75, #3282b8);
+    border: 1px solid #00d4ff;
+    box-shadow: inset 0 0 5px rgba(0, 212, 255, 0.3);
+}
+
+.tile-2 {
+    background: linear-gradient(90deg, #1e3a8a, #1e40af);
+    border: 1px solid #60a5fa;
+    position: relative;
+}
+
+.tile-2::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #00d4ff;
+    transform: translateY(-50%);
+}
+
+.tile-3 {
+    background: radial-gradient(circle, #059669, #065f46);
+    border: 1px solid #10b981;
+    border-radius: 50%;
+    animation: pulse-green 2s infinite;
+}
+
+.tile-4 {
+    background: linear-gradient(135deg, #7c3aed, #5b21b6);
+    border: 1px solid #a855f7;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+.tilemap-controls {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.map-button {
+    background: linear-gradient(145deg, #333, #222);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.map-button:hover {
+    background: linear-gradient(145deg, #444, #333);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.map-button.active {
+    background: linear-gradient(145deg, #555, #444);
+    border-color: #00d4ff;
+    color: #00d4ff;
+}
+
+.tile-5 {
+    background: linear-gradient(45deg, #dc2626, #991b1b);
+    border: 1px solid #ef4444;
+    border-radius: 4px;
+    animation: glow-red 1.5s infinite alternate;
+}
+
+/* Matrix Theme Tiles */
+.tile-6 {
+    background: rgba(0, 255, 0, 0.1);
+    color: #00ff00;
+    text-align: center;
+    line-height: 32px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    animation: matrix-flicker 3s infinite;
+}
+
+.tile-6::before {
+    content: attr(data-char);
+}
+
+/* Cyberpunk City Theme Tiles */
+.tile-7 {
+    background: linear-gradient(180deg, #1f2937, #111827);
+    border-right: 1px solid #374151;
+}
+
+.tile-8 {
+    background: linear-gradient(180deg, #374151, #1f2937);
+    border: 1px solid #4b5563;
+}
+
+.tile-9 {
+    background: linear-gradient(45deg, #fbbf24, #f59e0b);
+    box-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+    animation: window-flicker 4s infinite;
+}
+
+.tile-10 {
+    background: linear-gradient(180deg, #6b7280, #374151);
+    border: 1px solid #9ca3af;
+}
+
+.tile-11 {
+    background: linear-gradient(45deg, #06b6d4, #0891b2);
+    box-shadow: 0 0 6px rgba(6, 182, 212, 0.4);
+    animation: neon-blue 3s infinite;
+}
+
+.tile-12 {
+    background: linear-gradient(90deg, #1f2937, #374151);
+    border-top: 2px solid #4b5563;
+}
+
+.tile-13 {
+    background: radial-gradient(ellipse, #ef4444, #dc2626);
+    box-shadow: 0 0 4px rgba(239, 68, 68, 0.6);
+    animation: traffic-light 2s infinite;
+}
+
+.tile-14 {
+    background: radial-gradient(ellipse, #10b981, #059669);
+    box-shadow: 0 0 4px rgba(16, 185, 129, 0.6);
+    animation: traffic-light 2s infinite 1s;
+}
+
+.tile-15 {
+    background: linear-gradient(180deg, #374151, #1f2937);
+    border-top: 1px solid #6b7280;
+}
+
+.tile-16 {
+    background: linear-gradient(45deg, #4b5563, #374151);
+    border: 1px solid #6b7280;
+}
+
+.tile-17 {
+    background: linear-gradient(45deg, #1f2937, #111827);
+    border: 1px solid #374151;
+}
+
+/* Animations */
+@keyframes pulse-green {
+
+    0%,
+    100% {
+        box-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
+        transform: scale(1);
+    }
+
+    50% {
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.8);
+        transform: scale(1.05);
+    }
+}
+
+@keyframes glow-red {
+    0% {
+        box-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
+    }
+
+    100% {
+        box-shadow: 0 0 15px rgba(239, 68, 68, 0.9);
+    }
+}
+
+@keyframes matrix-flicker {
+
+    0%,
+    90%,
+    100% {
+        opacity: 0.8;
+        color: #00ff00;
+    }
+
+    5%,
+    85% {
+        opacity: 0.3;
+        color: #00aa00;
+    }
+
+    10%,
+    80% {
+        opacity: 1;
+        color: #00ff41;
+    }
+}
+
+@keyframes window-flicker {
+
+    0%,
+    94%,
+    100% {
+        opacity: 1;
+    }
+
+    2%,
+    96% {
+        opacity: 0.3;
+    }
+
+    4%,
+    98% {
+        opacity: 0.8;
+    }
+}
+
+@keyframes neon-blue {
+
+    0%,
+    100% {
+        box-shadow: 0 0 6px rgba(6, 182, 212, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 0 12px rgba(6, 182, 212, 0.8);
+    }
+}
+
+@keyframes traffic-light {
+
+    0%,
+    40%,
+    100% {
+        opacity: 0.3;
+    }
+
+    20% {
+        opacity: 1;
+    }
+}
+
+/* Performance optimizations */
+.tilemap-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    /* Don't interfere with game interactions */
+    transform: translateZ(0);
+    /* Force GPU acceleration */
+    will-change: transform;
+}
+
+/* Responsive design for different screen sizes */
+@media (max-width: 768px) {
+    .tile {
+        transform: scale(0.8);
+        transform-origin: 0 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .tile {
+        transform: scale(0.6);
+        transform-origin: 0 0;
+    }
+}
+
+/* Reduce animations on low-performance devices */
+@media (prefers-reduced-motion: reduce) {
+    .tile {
+        animation: none !important;
+        transition: none !important;
+    }
+}
