@@ -1,3 +1,8 @@
+// Add these imports at the top of your main.js file
+import { TilemapEngine } from "./tilemap.js";
+import { allMaps, getNextMap } from "./tilemapData.js";
+
+// Add this to your existing imports section
 import { gameState } from "./gameState.js";
 import { createBoard, createEmptyBoard } from "./board.js";
 import { createShapes, getRandomShape } from "./shapes.js";
@@ -7,6 +12,105 @@ import { setupEventListeners } from "./events.js";
 import { updateTimer } from "./ui.js";
 import { moveShape } from "./gameLogic.js";
 import { TetrisStory } from "./gameMode.js";
+
+// Add tilemap engine instance
+const tilemapEngine = new TilemapEngine();
+let currentMapIndex = 0;
+let tilemapEnabled = true;
+
+/**
+ * Initialize the tilemap system
+ */
+function initTilemap() {
+  // Initialize the tilemap engine
+  if (tilemapEngine.init('#tilemap-container')) {
+    // Load the first map
+    tilemapEngine.setMap(allMaps[currentMapIndex]);
+
+    // Setup tilemap controls
+    setupTilemapControls();
+
+    console.log('Tilemap system initialized successfully');
+  } else {
+    console.error('Failed to initialize tilemap system');
+  }
+}
+
+/**
+ * Setup tilemap control buttons
+ */
+function setupTilemapControls() {
+  const circuitBtn = document.getElementById('map-circuit');
+  const matrixBtn = document.getElementById('map-matrix');
+  const cityBtn = document.getElementById('map-city');
+  const toggleBtn = document.getElementById('map-toggle');
+
+  if (circuitBtn) {
+    circuitBtn.addEventListener('click', () => switchToMap(0));
+  }
+  if (matrixBtn) {
+    matrixBtn.addEventListener('click', () => switchToMap(1));
+  }
+  if (cityBtn) {
+    cityBtn.addEventListener('click', () => switchToMap(2));
+  }
+  if (toggleBtn) {
+    toggleBtn.addEventListener('click', toggleTilemap);
+  }
+
+  // Set initial active button
+  updateActiveMapButton();
+}
+
+/**
+ * Switch to a specific tilemap
+ */
+function switchToMap(mapIndex) {
+  if (mapIndex >= 0 && mapIndex < allMaps.length) {
+    currentMapIndex = mapIndex;
+    if (tilemapEnabled) {
+      // Reset map position for new map
+      allMaps[currentMapIndex].offsetX = 0;
+      allMaps[currentMapIndex].offsetY = 0;
+      tilemapEngine.setMap(allMaps[currentMapIndex]);
+    }
+    updateActiveMapButton();
+    console.log(`Switched to tilemap: ${allMaps[currentMapIndex].name}`);
+  }
+}
+
+/**
+ * Toggle tilemap visibility
+ */
+function toggleTilemap() {
+  tilemapEnabled = !tilemapEnabled;
+  const container = document.getElementById('tilemap-container');
+  const toggleBtn = document.getElementById('map-toggle');
+
+  if (container) {
+    container.style.display = tilemapEnabled ? 'block' : 'none';
+  }
+
+  if (toggleBtn) {
+    toggleBtn.textContent = tilemapEnabled ? 'Hide Background' : 'Show Background';
+    toggleBtn.classList.toggle('active', tilemapEnabled);
+  }
+
+  console.log(`Tilemap ${tilemapEnabled ? 'enabled' : 'disabled'}`);
+}
+
+/**
+ * Update active map button styling
+ */
+function updateActiveMapButton() {
+  const buttons = ['map-circuit', 'map-matrix', 'map-city'];
+  buttons.forEach((btnId, index) => {
+    const btn = document.getElementById(btnId);
+    if (btn) {
+      btn.classList.toggle('active', index === currentMapIndex && tilemapEnabled);
+    }
+  });
+}
 
 /**
  * Creates a new shape for the game.
@@ -79,7 +183,7 @@ function draw() {
 }
 
 /**
- * Updates the game state, handling movement, timing, and drawing.
+ * Updates the game state, handling movement, timing, drawing, and tilemap animation.
  */
 export function update(time = 0) {
   const deltaTime = time - gameState.lastTime;
@@ -105,7 +209,13 @@ export function update(time = 0) {
 
   if (gameState.state === 1) {
     draw();
+
+    // Update tilemap animation if enabled
+    if (tilemapEnabled && tilemapEngine) {
+      tilemapEngine.animate(deltaTime);
+    }
   }
+
   gameState.lastTime = time;
   gameState.animationId = requestAnimationFrame(update);
 }
@@ -137,6 +247,12 @@ export function startGame() {
   createShapes();
   createShape();
 
+  // Automatically switch to next tilemap when starting a new game
+  if (tilemapEnabled) {
+    const nextMapIndex = (currentMapIndex + 1) % allMaps.length;
+    switchToMap(nextMapIndex);
+  }
+
   let wasRunning = gameState.state === 1;
   if (wasRunning) {
     gameState.state = 0;
@@ -150,15 +266,16 @@ export function startGame() {
   document.getElementById("story-close").onclick = () => {
     storyModal.classList.add("hidden");
     if (wasRunning) {
-        gameState.state = 1;
-        gameState.timerRunning = true;
-      }
+      gameState.state = 1;
+      gameState.timerRunning = true;
+    }
   };
 
   gameState.lastTime = 0;
   gameState.dropCounter = 0;
   update();
 }
+
 setupEventListeners();
 
 export function showStoryMessage(message) {
@@ -188,4 +305,10 @@ document.addEventListener("DOMContentLoaded", () => {
   startButton.addEventListener("click", () => {
     startGame();
   });
+
+  // Initialize tilemap system after DOM is loaded
+  initTilemap();
 });
+
+// Export the tilemap functions for use in other modules if needed
+export { switchToMap, toggleTilemap };
