@@ -101,6 +101,18 @@
     content: attr(data-char);
 }
 
+/* PERFORMANCE FIX - Disable all tile animations */
+.tile {
+    animation: none !important;
+    transition: none !important;
+}
+
+.tile::before,
+.tile::after {
+    animation: none !important;
+    transition: none !important;
+}
+
 /* Cyberpunk City Theme Tiles */
 .tile-7 {
     background: linear-gradient(180deg, #1f2937, #111827);
