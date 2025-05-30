@@ -1,7 +1,7 @@
 // static/js/tilemap.js
 export class TilemapEngine {
     constructor() {
-        this.tileSize = 32; // Size of each tile in pixels
+        this.tileSize = 64; // Size of each tile in pixels
         this.viewportWidth = 0;
         this.viewportHeight = 0;
         this.currentMap = null;
@@ -61,8 +61,8 @@ export class TilemapEngine {
         this.viewportHeight = rect.height;
 
         // Calculate how many tiles we need to fill the entire screen
-        this.tilesNeededX = Math.ceil(this.viewportWidth / this.tileSize) + 2; // +2 for buffer
-        this.tilesNeededY = Math.ceil(this.viewportHeight / this.tileSize) + 2; // +2 for buffer
+        this.tilesNeededX = Math.ceil(this.viewportWidth / this.tileSize) + 1; // +2 for buffer
+        this.tilesNeededY = Math.ceil(this.viewportHeight / this.tileSize) + 1; // +2 for buffer
     }
 
     // Listen for container resize
